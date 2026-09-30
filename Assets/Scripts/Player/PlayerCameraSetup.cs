@@ -15,11 +15,11 @@ public class PlayerCameraSetup : MonoBehaviour
         OutputChannels myChannel = GetChannelForPlayer(playerIndex);
 
         _cinemachineCamera.OutputChannel = myChannel;
-        //le Brain n'écoute que ce channel, donc il ignore les caméras des autres joueurs.
+        //le Brain n'écoute que ce channel et ignore les caméras des autres joueurs.
         _brain.ChannelMask = myChannel;
     }
 
-    // Un canal différent par joueur.
+    // Un channel différent par joueur.
     OutputChannels GetChannelForPlayer(int playerIndex)
     {
         OutputChannels[] channels =

@@ -3,44 +3,42 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] InputActionReference movementInput;
-    [SerializeField] float speed = 5f;
+    [SerializeField] InputActionReference _movementInput;
+    [SerializeField] float _speed = 5f;
 
-    PlayerInput playerInput;
-    InputAction moveAction;
-    Vector2 moveDirection;
+    PlayerInput _playerInput;
+    InputAction _moveAction;
+    Vector2 _moveDirection;
 
     void Start()
     {
-        playerInput = GetComponentInParent<PlayerInput>();
+        _playerInput = GetComponent<PlayerInput>();
 
-       
-        playerInput.SwitchCurrentActionMap("Player");
 
-        moveAction = playerInput.actions.FindAction(movementInput.action.id);
+        _playerInput.SwitchCurrentActionMap("Player");
 
-        moveAction.performed += HandleMove;
-        moveAction.canceled += HandleMove;
+        _moveAction = _playerInput.actions.FindAction(_movementInput.action.id);
+
+        _moveAction.performed += HandleMove;
+        _moveAction.canceled += HandleMove;
     }
 
     void OnDestroy()
     {
-        if (moveAction == null) return;
+        if (_moveAction == null) return;
 
-        moveAction.performed -= HandleMove;
-        moveAction.canceled -= HandleMove;
+        _moveAction.performed -= HandleMove;
+        _moveAction.canceled -= HandleMove;
     }
 
     void HandleMove(InputAction.CallbackContext context)
     {
-        Debug.Log($"Joueur {playerInput.playerIndex} reçoit {context.ReadValue<Vector2>()} " +
-                  $"depuis {context.control.device.displayName}");
-        moveDirection = context.ReadValue<Vector2>();
+        _moveDirection = context.ReadValue<Vector2>();
     }
 
     void Update()
     {
-        Vector3 move = new Vector3(moveDirection.x, 0f, moveDirection.y);
-        transform.Translate(move * speed * Time.deltaTime, Space.World);
+        Vector3 move = new Vector3(_moveDirection.x, 0f, _moveDirection.y);
+        transform.Translate(move * _speed * Time.deltaTime, Space.Self);
     }
 }
