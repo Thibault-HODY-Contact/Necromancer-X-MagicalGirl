@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.DualShock;
+using UnityEngine.InputSystem.XInput;
 
 public class UiCharacterSelection : MonoBehaviour
 {
@@ -11,8 +14,18 @@ public class UiCharacterSelection : MonoBehaviour
 
     [SerializeField] GameObject[] _rootList;
 
+    [SerializeField] ControllerDetector _detector;
+
     int J1_characterChoose = 0; // -1 = necromancer 1 = MagicalGirl
     int J2_characterChoose = 0; // -1 = necromancer 1 = MagicalGirl
+
+    InputDevice J1Input = null;
+
+    InputDevice J2Input = null;
+
+    bool _j1CanBeReady = false;
+    bool _j2CanBeReady = false;
+
 
     List<int> _CharacterChoose = new List<int> { 0, 0 };
     public void onLeftButton(int _playerId)
@@ -44,12 +57,14 @@ public class UiCharacterSelection : MonoBehaviour
         }
         _CharacterChoose[_playerId] = 1;
     }
-
-
-    void Start()
+    private void Start()
     {
+      
+        J1Input = _detector.Keyboard;
+        _j1CanBeReady = J1Input != null;
 
-
+        J2Input = _detector.ManettesList.Count > 0 ? _detector.ManettesList[0] : null;
+        _j2CanBeReady = J2Input != null;
     }
 
     void Update()
@@ -59,19 +74,24 @@ public class UiCharacterSelection : MonoBehaviour
         {
             if (_CharacterChoose[i] == 1)
             {
-                _rootList[i].transform.position = new Vector3(_rootList[i].transform.parent.transform.position.x+500, _rootList[i].transform.position.y, 0);
+                _rootList[i].transform.position = new Vector3(transform.position.x+500, _rootList[i].transform.position.y, 0);
 
             } else if(_CharacterChoose[i] == -1)
             {
-                _rootList[i].transform.position = new Vector3(_rootList[i].transform.parent.transform.position.x +- 500, _rootList[i].transform.position.y, 0);
+                _rootList[i].transform.position = new Vector3(transform.position.x + - 500, _rootList[i].transform.position.y, 0);
 
             }
             else
             {
-                _rootList[i].transform.position = new Vector3(_rootList[i].transform.parent.transform.position.x +- 46, _rootList[i].transform.position.y, 0);
+                _rootList[i].transform.position = new Vector3(transform.position.x + - 46, _rootList[i].transform.position.y, 0);
 
             }
         }
+
+        if (J1Input != null)
+            _DeviceJ1.text = J1Input.displayName;
+        if (J2Input != null)
+            _DeviceJ2.text = J2Input.displayName;
 
 
     }

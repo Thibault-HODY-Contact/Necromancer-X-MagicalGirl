@@ -9,8 +9,19 @@ public class ControllerDetector : MonoBehaviour
 {
     int _nombreManette = 0;
     InputDevice _Keyboard;
-    List<InputDevice> _ManettesList;
-   public int nombreManette
+    List<InputDevice> _ManettesList = new List<InputDevice>();
+
+    public InputDevice Keyboard
+    {
+        get { return _Keyboard; }
+    }
+    public List<InputDevice> ManettesList
+    {
+        get { return _ManettesList; }
+    }
+
+
+    public int nombreManette
     {
         get {return _nombreManette;}
         private set { _nombreManette = value; }
