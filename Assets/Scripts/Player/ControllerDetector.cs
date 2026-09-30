@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using System.Linq;   // PlayStation
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.DualShock;
+using UnityEngine.InputSystem.DualShock;  // PlayStation
 using UnityEngine.InputSystem.XInput;       // Xbox
 
 public class ControllerDetector : MonoBehaviour
@@ -27,7 +26,7 @@ public class ControllerDetector : MonoBehaviour
         private set { _nombreManette = value; }
     }
 
-    void Start()
+    void Awake()
     {
         foreach (InputDevice device in InputSystem.devices)
         {
