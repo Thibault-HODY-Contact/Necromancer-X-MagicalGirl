@@ -446,15 +446,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2349204002147550335, guid: d173a89ff8d99cc45bed572017b5003b, type: 3}
       propertyPath: m_Name
-      value: Capsule
-      objectReference: {fileID: 0}
-    - target: {fileID: 2454468891045348061, guid: d173a89ff8d99cc45bed572017b5003b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.07992554
-      objectReference: {fileID: 0}
-    - target: {fileID: 2799541085449090511, guid: d173a89ff8d99cc45bed572017b5003b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.07992554
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8311687124821294349, guid: d173a89ff8d99cc45bed572017b5003b, type: 3}
       propertyPath: m_LocalPosition.x

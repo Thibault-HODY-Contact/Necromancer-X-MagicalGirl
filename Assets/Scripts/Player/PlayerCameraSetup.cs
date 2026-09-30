@@ -7,11 +7,12 @@ public class PlayerCameraSetup : MonoBehaviour
 {
     [SerializeField] CinemachineBrain _brain;     
     [SerializeField] CinemachineCamera _cinemachineCamera;
+    [SerializeField] PlayerInput _playerInput;
 
     void Awake()
     {
         // Numéro attribué par le PlayerInputManager 
-        int playerIndex = GetComponent<PlayerInput>().playerIndex;
+        int playerIndex = _playerInput.playerIndex;
         OutputChannels myChannel = GetChannelForPlayer(playerIndex);
 
         _cinemachineCamera.OutputChannel = myChannel;
