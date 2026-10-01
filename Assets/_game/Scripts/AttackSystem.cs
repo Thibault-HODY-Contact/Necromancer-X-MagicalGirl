@@ -8,7 +8,7 @@ public class HitboxSettings
     public AttackHitbox hitbox;
 
     
-    [Min(0f)] private float _delay;
+    [SerializeField, Min(0f)] private float _delay;
     public float Delay
     {
         get => _delay;
@@ -25,8 +25,7 @@ public class HitboxSettings
     [SerializeField, ReadOnly]
     internal bool isActivated;
 
-    
-    [Min(0f)] private float _duration;
+    [SerializeField, Min(0f)] private float _duration;
     public float Duration
     {
         get => _duration;
@@ -50,20 +49,11 @@ public class HitboxSettings
 public class AttackSystem : MonoBehaviour
 {
     [SerializeField] List<HitboxSettings> _hitboxes = new List<HitboxSettings>();
-    [SerializeField, Min(0f)] float _cooldown;
-    public float Cooldown
-    {
-        get => _cooldown;
-        set => _cooldown = Mathf.Max(0f, value);
-    }
-
-    private float _cooldownTimer;
     private bool _isInitialized;
 
     public bool IsAttacking { get; private set; }
-    public float CooldownRemaining => _cooldownTimer;
     public bool CanAttack => _isInitialized && isActiveAndEnabled
-        && !IsAttacking && _cooldownTimer <= 0f;
+        && !IsAttacking;
 
     public event Action Activated;
     public event Action Desactivated;
@@ -112,8 +102,6 @@ public class AttackSystem : MonoBehaviour
 
     private void Update()
     {
-        _cooldownTimer = Mathf.Max(0f, _cooldownTimer - Time.deltaTime);
-
         if (!IsAttacking) return;
 
         bool hasPendingHitbox = false;
@@ -214,7 +202,6 @@ public class AttackSystem : MonoBehaviour
         if (!CanAttack) return;
 
         IsAttacking = true;
-        _cooldownTimer = Cooldown;
 
         foreach (HitboxSettings settings in _hitboxes)
         {
