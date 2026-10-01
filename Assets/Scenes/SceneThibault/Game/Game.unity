@@ -462,7 +462,7 @@ PrefabInstance:
     - target: {fileID: 1978876121684267214, guid: ff18b98bab20e1f49872ff11659304e5, type: 3}
       propertyPath: _magicalGirlPrefab
       value: 
-      objectReference: {fileID: 2349204002147550335, guid: d173a89ff8d99cc45bed572017b5003b, type: 3}
+      objectReference: {fileID: 2349204002147550335, guid: f388ad6fd5e4ffd499358b1825eaf930, type: 3}
     - target: {fileID: 1978876121684267214, guid: ff18b98bab20e1f49872ff11659304e5, type: 3}
       propertyPath: _necromancerPrefab
       value: 
