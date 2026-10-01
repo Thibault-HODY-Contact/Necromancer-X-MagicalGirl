@@ -7,8 +7,8 @@ public class HitboxSettings
 {
     public AttackHitbox hitbox;
 
-    
-    [Min(0f)] private float _delay;
+
+    [SerializeField, Min(0f)] private float _delay;
     public float Delay
     {
         get => _delay;
@@ -25,8 +25,7 @@ public class HitboxSettings
     [SerializeField, ReadOnly]
     internal bool isActivated;
 
-    
-    [Min(0f)] private float _duration;
+    [SerializeField, Min(0f)] private float _duration;
     public float Duration
     {
         get => _duration;
