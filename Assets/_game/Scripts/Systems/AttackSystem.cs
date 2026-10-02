@@ -6,7 +6,6 @@ using UnityEngine;
 public class HitboxSettings
 {
     public AttackHitbox hitbox;
-
     
     [SerializeField, Min(0f)] float _delay;
     public float Delay => _delay;
@@ -19,13 +18,21 @@ public class HitboxSettings
     [SerializeField,ReadOnly] internal bool isActivated;
     [SerializeField,ReadOnly] internal bool isDesactivated;
 
-    public int damage;
-    public int knockback;
+    [SerializeField, Min(0)] int _damage;
+    [SerializeField] int _knockback;
+
+    public int Damage { get => _damage; set => _damage = value; }
+    public int Knockback { get => _knockback; set => _knockback = value; }
 }
 
 public class AttackSystem : MonoBehaviour
 {
     [SerializeField] List<HitboxSettings> _hitboxes = new List<HitboxSettings>();
+    [SerializeField] List<string> _damageableTags = new List<string>();
+    [SerializeField] List<string> _knockbackableTags = new List<string>();
+
+    public List<HitboxSettings> Hitboxes => _hitboxes;
+
     private bool _isInitialized;
 
     public bool IsAttacking { get; private set; }
@@ -34,6 +41,7 @@ public class AttackSystem : MonoBehaviour
 
     public event Action Activated;
     public event Action Desactivated;
+    public event Action OnHit;
 
     private void Awake()
     {
@@ -63,6 +71,7 @@ public class AttackSystem : MonoBehaviour
 
         _isInitialized = true;
     }
+
 
     private void OnEnable()
     {
@@ -171,7 +180,24 @@ public class AttackSystem : MonoBehaviour
 
     private void HandleContact(Collider source, Collider target)
     {
-        Debug.Log($"{source.name} a touché {target.name}");
+        GameObject root = target.transform.root.gameObject;
+
+        foreach (string tag in _damageableTags)
+        {
+            LifeSystem lifeSystem = root.GetComponentInChildren<LifeSystem>();
+            if (root.CompareTag(tag) && lifeSystem != null)
+            {
+                Debug.Log($"{target.name} est endommagé par {source.name}");
+
+                HitboxSettings settings = _hitboxes.Find(candidate => candidate.hitbox.Collider == source);
+
+                if (settings == null) return;
+
+                lifeSystem.TakeDamage(settings.Damage);
+                OnHit?.Invoke();
+                break;
+            }
+        }
     }
 
     public void Attack()

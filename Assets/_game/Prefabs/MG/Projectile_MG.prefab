@@ -45,7 +45,66 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Brain_Projectile_MG
   _moveSystem: {fileID: 5219976679639969207}
+  _attackSystem: {fileID: 5588438969987336859}
   _lifeDuration: 1
+--- !u!1 &573206308821454897
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8371587252668314558}
+  - component: {fileID: 5588438969987336859}
+  m_Layer: 0
+  m_Name: AttackSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8371587252668314558
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573206308821454897}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3381185121461115318}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5588438969987336859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573206308821454897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e78913d7849efa644b221611c957d9e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttackSystem
+  _hitboxes:
+  - hitbox: {fileID: 6435473182505355738}
+    _delay: 0
+    _delayTimer: 0
+    _duration: 10
+    _durationTimer: 0
+    isActivated: 0
+    isDesactivated: 0
+    _damage: 10
+    _knockback: 0
+  _damageableTags:
+  - Enemy
+  _knockbackableTags:
+  - Enemy
 --- !u!1 &1779067999968824185
 GameObject:
   m_ObjectHideFlags: 0
@@ -76,6 +135,38 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 298271811438082384}
+  m_Father: {fileID: 7952254558456692705}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3360029810102115165
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2267031321684694538}
+  m_Layer: 0
+  m_Name: Render
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2267031321684694538
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3360029810102115165}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6777979165578008879}
   m_Father: {fileID: 7952254558456692705}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4111010044759185135
@@ -153,7 +244,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6777979165578008879}
+  - {fileID: 2267031321684694538}
   - {fileID: 6167479583013084210}
   - {fileID: 4671243676681042633}
   - {fileID: 3381185121461115318}
@@ -169,6 +260,7 @@ GameObject:
   m_Component:
   - component: {fileID: 298271811438082384}
   - component: {fileID: 4252541088289880915}
+  - component: {fileID: 6435473182505355738}
   m_Layer: 0
   m_Name: Hitbox
   m_TagString: Untagged
@@ -206,12 +298,24 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6435473182505355738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5581133588976744956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1752a6f8fc8133c4faf5f464e9dbefad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttackHitbox
 --- !u!1 &6499795553204665754
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,6 +346,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4390280801129538562}
+  - {fileID: 8371587252668314558}
   m_Father: {fileID: 7952254558456692705}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &6456615259569127108
@@ -250,7 +355,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 7952254558456692705}
+    m_TransformParent: {fileID: 2267031321684694538}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 8c833c47e6cf1de4aa71d162b83a5bdc, type: 3}
       propertyPath: m_LocalPosition.x

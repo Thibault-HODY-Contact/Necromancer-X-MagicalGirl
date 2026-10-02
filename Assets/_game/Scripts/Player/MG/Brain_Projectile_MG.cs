@@ -3,6 +3,7 @@ using UnityEngine;
 public class Brain_Projectile_MG : MonoBehaviour
 {
     [SerializeField] MoveSystem _moveSystem;
+    [SerializeField] AttackSystem _attackSystem;
 
     Transform _rootTransform;
 
@@ -13,10 +14,19 @@ public class Brain_Projectile_MG : MonoBehaviour
         _lifeDuration = 5f;
     }
 
-    private void Start()
+    void Start()
     {
         _rootTransform = transform.root;
+        _attackSystem.Attack();
+
+        _attackSystem.OnHit += OnHit;
     }
+
+    void OnDestroy()
+    {
+        _attackSystem.OnHit -= OnHit;
+    }
+
     void Update()
     {
         _lifeDuration -= Time.deltaTime;
@@ -27,5 +37,10 @@ public class Brain_Projectile_MG : MonoBehaviour
         }
 
         _moveSystem.MoveDirection = new Vector2(_rootTransform.forward.x, _rootTransform.forward.z);
+    }
+
+    void OnHit()
+    {
+        Destroy(_rootTransform.gameObject);
     }
 }
