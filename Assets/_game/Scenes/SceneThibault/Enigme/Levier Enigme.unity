@@ -241,16 +241,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 80d6fb52764f334459cef27674a90edb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.2021
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 80d6fb52764f334459cef27674a90edb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.2021
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 80d6fb52764f334459cef27674a90edb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.2021
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 80d6fb52764f334459cef27674a90edb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.489851
+      value: -13.499
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 80d6fb52764f334459cef27674a90edb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.00004001152
+      value: -0.084636
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 80d6fb52764f334459cef27674a90edb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.404704
+      value: 5.3647
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 80d6fb52764f334459cef27674a90edb, type: 3}
       propertyPath: m_LocalRotation.w
@@ -337,6 +349,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 80d6fb52764f334459cef27674a90edb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 570949181}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 80d6fb52764f334459cef27674a90edb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 570949184}
   m_SourcePrefab: {fileID: 100100000, guid: 80d6fb52764f334459cef27674a90edb, type: 3}
 --- !u!1 &570949179 stripped
 GameObject:
@@ -377,7 +392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d590bfb34a473d4c81cef8857df4bce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractInterface
-  interactingObject: {fileID: 0}
+  _Interact: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!114 &570949182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,7 +405,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1018ff3d75f291647941476409042bb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevierBase
-  _animator: {fileID: 0}
+  _Interact: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  _animator: {fileID: 570949180}
+--- !u!65 &570949184
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 570949179}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.27197647, y: 0.15106906, z: 0.3500309}
+  m_Center: {x: 0.0073127747, y: 0.057169847, z: 0.033267498}
 --- !u!1 &605649363
 GameObject:
   m_ObjectHideFlags: 0
@@ -529,6 +566,7 @@ GameObject:
   - component: {fileID: 1394696418}
   - component: {fileID: 1394696417}
   - component: {fileID: 1394696416}
+  - component: {fileID: 1394696419}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -610,6 +648,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1394696419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394696415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!1001 &1778411266
 PrefabInstance:
   m_ObjectHideFlags: 0

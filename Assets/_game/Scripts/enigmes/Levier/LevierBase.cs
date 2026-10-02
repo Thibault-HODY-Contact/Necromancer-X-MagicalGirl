@@ -1,23 +1,24 @@
+using System.Net;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class LevierBase : MonoBehaviour
+public class LevierBase : InteractInterface
 {
     [SerializeField] Animator _animator;
     bool _isOn = false;
     bool _wasClicked = false;
     bool _wasClickedLastFrame = false;
-    public bool isOn {  get { return _isOn; } private set { _isOn = isOn; } }
+    public bool isOn {  get { return _isOn; } private set { _isOn = value; } }
 
-    public bool wasClicked { get { return _wasClicked; } private set { _wasClicked = wasClicked; } }
-    public bool wasClickedLastFrame { get { return _wasClickedLastFrame; } private set { _wasClickedLastFrame = wasClickedLastFrame; } }
+    public bool wasClicked { get { return _wasClicked; } private set { _wasClicked = value; } }
+    public bool wasClickedLastFrame { get { return _wasClickedLastFrame; } private set { _wasClickedLastFrame = value; } }
 
-    void OnClick(InputAction.CallbackContext context)
+    override public void OnInteract (InputAction.CallbackContext context) 
     {
-        wasClicked = true;
+        Debug.Log("E");
+        wasClicked = true;  
         isOn = !isOn;
-
-       
+        Debug.Log("_isOn = " + _isOn + " _wasClicked = " + _wasClicked + " _wasClickedLastFrame = " + _wasClickedLastFrame);
 
     }
     void Start()
@@ -28,10 +29,9 @@ public class LevierBase : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
- 
 
-        if (!wasClickedLastFrame && !wasClicked) return;
-        else if (wasClickedLastFrame && !wasClicked)
+
+        if (wasClickedLastFrame && !wasClicked)
         {
             _wasClickedLastFrame = false;
         }
@@ -43,4 +43,6 @@ public class LevierBase : MonoBehaviour
         _animator.SetBool("isOn", isOn);
         _animator.SetBool("wasClicked", wasClicked);
     }
+   
+
 }
