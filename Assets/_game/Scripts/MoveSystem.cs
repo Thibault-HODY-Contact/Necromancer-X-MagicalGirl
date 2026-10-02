@@ -14,7 +14,6 @@ public class MoveSystem : MonoBehaviour
 
     void Update()
     {
-        Vector3 move = new Vector3(MoveDirection.x, 0f, MoveDirection.y);
-        _rootTransform.Translate(move * _speed * Time.deltaTime, Space.Self);
+        _rootTransform.Translate(new Vector3(MoveDirection.x, 0f, MoveDirection.y) * _speed * Time.deltaTime, Space.World);
     }
 }

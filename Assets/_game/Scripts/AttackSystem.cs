@@ -8,39 +8,16 @@ public class HitboxSettings
     public AttackHitbox hitbox;
 
     
-    [SerializeField, Min(0f)] private float _delay;
-    public float Delay
-    {
-        get => _delay;
-        private set => _delay = Mathf.Max(0f, value);
-    }
+    [SerializeField, Min(0f)] float _delay;
+    public float Delay => _delay;
+    [SerializeField,ReadOnly] internal float _delayTimer;
 
-    private float _delayTimer;
-    public float DelayTimer
-    {
-        get => _delayTimer;
-        set => _delayTimer = Mathf.Max(0f, value);
-    }
+    [SerializeField, Min(0f)] float _duration;
+    public float Duration => _duration;
+    [SerializeField,ReadOnly] internal float _durationTimer;
 
-    [SerializeField, ReadOnly]
-    internal bool isActivated;
-
-    [SerializeField, Min(0f)] private float _duration;
-    public float Duration
-    {
-        get => _duration;
-        private set => _duration = Mathf.Max(0f, value);
-    }
-
-    private float _durationTimer;
-    public float DurationTimer
-    {
-        get => _durationTimer;
-        set => _durationTimer = Mathf.Max(0f, value);
-    }
-
-    [SerializeField, ReadOnly]
-    internal bool isDesactivated;
+    [SerializeField,ReadOnly] internal bool isActivated;
+    [SerializeField,ReadOnly] internal bool isDesactivated;
 
     public int damage;
     public int knockback;
@@ -120,11 +97,11 @@ public class AttackSystem : MonoBehaviour
 
             if (!settings.isActivated)
             {
-                float waitingTime = Mathf.Min(settings.DelayTimer, deltaTime);
-                settings.DelayTimer = settings.DelayTimer - deltaTime;
+                float waitingTime = Mathf.Min(settings._delayTimer, deltaTime);
+                settings._delayTimer = settings._delayTimer - deltaTime;
                 deltaTime -= waitingTime;
 
-                if (settings.DelayTimer > 0f)
+                if (settings._delayTimer > 0f)
                 {
                     hasPendingHitbox = true;
                     continue;
@@ -137,9 +114,9 @@ public class AttackSystem : MonoBehaviour
                 if (!isActiveAndEnabled || !IsAttacking) return;
             }
 
-            settings.DurationTimer = settings.DurationTimer - deltaTime;
+            settings._durationTimer = settings._durationTimer - deltaTime;
 
-            if (settings.DurationTimer <= 0f)
+            if (settings._durationTimer <= 0f)
             {
                 settings.isDesactivated = true;
                 settings.hitbox.Collider.enabled = false;
@@ -181,8 +158,8 @@ public class AttackSystem : MonoBehaviour
 
     private static void ResetHitbox(HitboxSettings settings)
     {
-        settings.DelayTimer = 0f;
-        settings.DurationTimer = 0f;
+        settings._delayTimer = 0f;
+        settings._durationTimer = 0f;
         settings.isActivated = true;
         settings.isDesactivated = true;
 
@@ -206,8 +183,8 @@ public class AttackSystem : MonoBehaviour
         foreach (HitboxSettings settings in _hitboxes)
         {
             ResetHitbox(settings);
-            settings.DelayTimer = settings.Delay;
-            settings.DurationTimer = settings.Duration;
+            settings._delayTimer = settings.Delay;
+            settings._durationTimer = settings.Duration;
             settings.isActivated = false;
             settings.isDesactivated = false;
         }
