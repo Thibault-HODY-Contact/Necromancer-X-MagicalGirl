@@ -7,8 +7,8 @@ public class PlayerBrain : MonoBehaviour
     [SerializeField] PlayerMovement _playerMovement;
 
     PlayerInput _playerInput; 
-    InputAction _moveAction; 
-
+    InputAction _moveAction;
+    
     void Start()
     {
         #region PlayerInput
