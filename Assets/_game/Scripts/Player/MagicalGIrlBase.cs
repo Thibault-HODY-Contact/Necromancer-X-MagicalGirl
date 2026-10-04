@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class MagicalGIrlBase : MonoBehaviour
+public class MagicalGirlBase : MonoBehaviour
 {
     void Start()
     {

@@ -1307,7 +1307,7 @@ MonoBehaviour:
   _detector: {fileID: 88128581}
   _countdownDuration: 5
   _countdownText: {fileID: 828722768}
-  _gameSceneName: Game
+  _gameSceneName: Levier Enigme
 --- !u!114 &88128581
 MonoBehaviour:
   m_ObjectHideFlags: 0

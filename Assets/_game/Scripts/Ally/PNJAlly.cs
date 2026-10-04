@@ -5,6 +5,15 @@ public class PNJAlly : MonoBehaviour
 {
     [SerializeField] NavMeshAgent _navAgent;
 
+    GameObject _Owner;
+    PlayerCommander _PlayerCommander;
+
+    public GameObject Owner
+    { get { return _Owner; }  private set { _Owner = value; } }
+
+    public PlayerCommander PlayerCommander
+    { get { return _PlayerCommander; } private set { _PlayerCommander = value; } }
+
     public NavMeshAgent NavAgent
         { get { return _navAgent; } private set { _navAgent = value; } }
 
@@ -16,6 +25,23 @@ public class PNJAlly : MonoBehaviour
     public Transform TargetPoint
     { get { return _TargetPoint; } private set { _TargetPoint = value; } }
 
+    private void Awake()
+    {
+        if (_navAgent == null)
+        {
+            _navAgent = GetComponent<NavMeshAgent>();
+        }
+
+    }
+    public void SetOwner(GameObject owner)
+    {
+        Owner = owner;
+    }
+    public void SetCommander(PlayerCommander commander)
+    {
+        _PlayerCommander = commander;
+    }
+
     void Start()
     {
         
@@ -24,6 +50,13 @@ public class PNJAlly : MonoBehaviour
     {
         
     }
+    private void OnEnable()
+    {
+
+
+    }
+
+
     private void OnDisable()
     {
         if (CurrentTarget != null)
@@ -32,6 +65,11 @@ public class PNJAlly : MonoBehaviour
         }
         CurrentTarget = null;
         TargetPoint = null;
+        if(Owner != null && PlayerCommander != null)
+        {
+            PlayerCommander.RemoveAlly(this);
+        }
+
     }
 
     public void InteractionFinished() 

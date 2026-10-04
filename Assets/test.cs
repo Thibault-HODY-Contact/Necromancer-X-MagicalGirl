@@ -1,34 +1,66 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// Script de TEST uniquement : envoie un PNJ précis sur un levier précis.
-public class TestOrder : MonoBehaviour
+// TEST uniquement : conversion et envoi d'alliés sans le sort.
+// C : convertir l'ennemi   T : envoyer les alliés au levier   Y : annuler les ordres
+public class TestConvert : MonoBehaviour
 {
-    [SerializeField] PNJAlly _pnj;
-    [SerializeField] PNJAlly _pnj1;
-
+    [SerializeField] GameObject _enemy;
     [SerializeField] InteractInterface _target;
+    [SerializeField] bool _useMagicalGirl;   // décoché = nécromancien
 
     void Update()
     {
         if (Keyboard.current == null) return;
 
-        // T : envoyer le PNJ au levier
+        if (Keyboard.current.cKey.wasPressedThisFrame)
+        {
+            PlayerCommander commander = GetCommander();
+            if (commander == null || _enemy == null) return;
+
+            PNJAlly ally = commander.Convert(_enemy);
+            Debug.Log("Converti : " + ally.name + " -> owner = " + ally.Owner.name);
+        }
+
         if (Keyboard.current.tKey.wasPressedThisFrame)
         {
-            bool ok = _pnj.OrderInteract(_target);
-            bool ok1 = _pnj1.OrderInteract(_target);
+            PlayerCommander commander = GetCommander();
+            if (commander == null) return;
 
-            Debug.Log("OrderInteract -> " + ok);
+            Debug.Log("Envoi de " + commander.Allies.Count + " allié(s) vers " + _target.name);
+            commander.SendAllyTo(_target);
         }
 
-        // Y : annuler l'ordre (pour tester le retour en Follow)
         if (Keyboard.current.yKey.wasPressedThisFrame)
         {
-            _pnj.CancelOrder();
-            _pnj1.CancelOrder();
+            PlayerCommander commander = GetCommander();
+            if (commander == null) return;
 
-            Debug.Log("CancelOrder");
+            foreach (PNJAlly ally in commander.Allies)
+                ally.CancelOrder();
+            Debug.Log("Ordres annulés");
         }
+    }
+
+    PlayerCommander GetCommander()
+    {
+        if (GameManager.Instance == null)
+        {
+            Debug.LogWarning("Pas de GameManager dans la scène.");
+            return null;
+        }
+
+        GameObject player = _useMagicalGirl ? GameManager.Instance.MagicalGirl
+                                            : GameManager.Instance.Necromancian;
+        if (player == null)
+        {
+            Debug.LogWarning("Joueur pas encore apparu (lance depuis le menu de sélection ?).");
+            return null;
+        }
+
+        PlayerCommander commander = player.GetComponentInChildren<PlayerCommander>();
+        if (commander == null)
+            Debug.LogWarning("Pas de PlayerCommander sur " + player.name);
+        return commander;
     }
 }
