@@ -388,6 +388,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 21643472297394673}
+  - component: {fileID: 8911330657625372237}
   m_Layer: 0
   m_Name: Feedback
   m_TagString: Untagged
@@ -410,6 +411,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3987506294209955848}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8911330657625372237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1721114454695224879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 859436c6672c4e5499f192a2cb85f275, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterFeedback
+  _lifeSystem: {fileID: 524379430910036903}
+  _onDamageFeedback:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7848135802825570568}
+        m_TargetAssemblyTypeName: MaterialFlash, Assembly-CSharp
+        m_MethodName: Flash
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1791047660870300315
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,6 +514,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3305454228166627428}
+  - component: {fileID: 524241805831975418}
   m_Layer: 0
   m_Name: KnockbackSystem
   m_TagString: Untagged
@@ -507,6 +537,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 532801488480218762}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &524241805831975418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2336928130555432218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d081ca33579e004bac705b2ab9a48d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KnockbackSystem
+  _rb: {fileID: 4838492910097751022}
 --- !u!1 &2667173256303713389
 GameObject:
   m_ObjectHideFlags: 0
@@ -945,7 +988,7 @@ GameObject:
   - component: {fileID: 673139046640822208}
   - component: {fileID: 7848135802825570568}
   m_Layer: 0
-  m_Name: DamageFlash
+  m_Name: OnHitFlash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -978,7 +1021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d22a2ae15d93d442b2aefaf761b91e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MaterialFlash
-  _visualRoot: {fileID: 1791047660870300315}
+  _visualRoot: {fileID: 6642060131148702437}
   _lifeSystem: {fileID: 524379430910036903}
   _flashMaterial: {fileID: 2100000, guid: a576aee5a09fa8f43ae3635dc493d7c7, type: 2}
   _flashDuration: 0.1

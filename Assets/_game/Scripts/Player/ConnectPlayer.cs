@@ -23,6 +23,12 @@ public class ConnectPlayer : MonoBehaviour
     {
         if (s_devices == null)
         {
+            if (_playerInputManager != null && _playerInputManager.joiningEnabled
+                && _playerInputManager.joinBehavior != PlayerJoinBehavior.JoinPlayersManually)
+            {
+                return;
+            }
+
             Debug.LogWarning("Aucun joueur choisi : lance le jeu depuis le menu de sélection.");
             return;
         }

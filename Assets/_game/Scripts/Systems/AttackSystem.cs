@@ -2,6 +2,12 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum KnockbackType
+{
+    AwayFromAttacker,
+    AttackerForward
+}
+
 [System.Serializable]
 public class HitboxSettings
 {
@@ -12,7 +18,7 @@ public class HitboxSettings
     [SerializeField,ReadOnly] internal float _delayTimer;
 
     [SerializeField, Min(0f)] float _duration;
-    public float Duration => _duration;
+    public float Duration { get => _duration; set => _duration = value; }
     [SerializeField,ReadOnly] internal float _durationTimer;
 
     [SerializeField,ReadOnly] internal bool isActivated;
@@ -20,9 +26,11 @@ public class HitboxSettings
 
     [SerializeField, Min(0)] int _damage;
     [SerializeField] int _knockback;
+    [SerializeField] KnockbackType _knockbackType;
 
     public int Damage { get => _damage; set => _damage = value; }
     public int Knockback { get => _knockback; set => _knockback = value; }
+    public KnockbackType KnockbackType  => _knockbackType;
 }
 
 public class AttackSystem : MonoBehaviour
@@ -185,22 +193,48 @@ public class AttackSystem : MonoBehaviour
         foreach (string tag in _damageableTags)
         {
             LifeSystem lifeSystem = root.GetComponentInChildren<LifeSystem>();
-            if (root.CompareTag(tag) && lifeSystem != null)
+            KnockbackSystem knockbackSystem = root.GetComponentInChildren<KnockbackSystem>();
+            if (root.CompareTag(tag))
             {
-                Debug.Log($"{target.name} est endommagé par {source.name}");
+                Debug.Log($"{target.name} est touché par {source.name}");
 
                 HitboxSettings settings = _hitboxes.Find(candidate => candidate.hitbox.Collider == source);
 
                 if (settings == null) return;
 
-                lifeSystem.TakeDamage(settings.Damage);
                 OnHit?.Invoke();
+
+                if (lifeSystem != null)
+                {
+                    lifeSystem.TakeDamage(settings.Damage);
+                }
+                if (knockbackSystem != null)
+                {
+                    if (settings.KnockbackType == KnockbackType.AttackerForward)
+                    {
+                        knockbackSystem.Knockback(settings.Knockback, source.transform.forward);
+                    }
+                    else if (settings.KnockbackType == KnockbackType.AwayFromAttacker)
+                    {
+                        GameObject rootSource = source.transform.root.gameObject;
+                        GameObject rootTarget = target.transform.root.gameObject;
+                        Vector3 knockbackDirection = (rootTarget.transform.position - rootSource.transform.position);
+                        knockbackSystem.Knockback(settings.Knockback, new Vector3(knockbackDirection.x, 0, knockbackDirection.z).normalized);
+                    }
+                }
+
+                
                 break;
             }
         }
     }
 
     public void Attack()
+    {
+        Attack(ignoreDelay: false);
+    }
+
+    public void Attack(bool ignoreDelay)
     {
         if (!CanAttack) return;
 
@@ -209,10 +243,28 @@ public class AttackSystem : MonoBehaviour
         foreach (HitboxSettings settings in _hitboxes)
         {
             ResetHitbox(settings);
-            settings._delayTimer = settings.Delay;
+            settings._delayTimer = ignoreDelay ? 0f : settings.Delay;
             settings._durationTimer = settings.Duration;
             settings.isActivated = false;
             settings.isDesactivated = false;
+        }
+    }
+
+    public void StopAttack()
+    {
+        if (!_isInitialized) return;
+
+        IsAttacking = false;
+
+        foreach (HitboxSettings settings in _hitboxes)
+        {
+            bool wasActive = settings.isActivated && !settings.isDesactivated;
+            ResetHitbox(settings);
+
+            if (wasActive)
+            {
+                Desactivated?.Invoke();
+            }
         }
     }
 }

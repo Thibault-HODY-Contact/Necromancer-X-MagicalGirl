@@ -1,16 +1,19 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CharacterFeedback : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] LifeSystem _lifeSystem;
+
+    [SerializeField] UnityEvent _onDamageFeedback = new UnityEvent();
+
     void Start()
     {
-        
+        _lifeSystem.OnDamage += OnDamageFeedback;
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnDamageFeedback(int PreviousHealth, int NewHealth)
     {
-        
+        _onDamageFeedback.Invoke();
     }
 }

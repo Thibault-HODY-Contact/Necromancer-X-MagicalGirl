@@ -18,4 +18,9 @@ public class LookSystem : MonoBehaviour
             _rootTransform.forward = lookDir;
         }
     }
+
+    public void Rotate(float angle)
+    {
+        _rootTransform.Rotate(Vector3.up, angle, Space.World);
+    }
 }

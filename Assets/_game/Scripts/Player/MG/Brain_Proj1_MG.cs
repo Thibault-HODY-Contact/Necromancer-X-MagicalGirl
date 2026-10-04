@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Brain_Projectile_MG : MonoBehaviour
+public class Brain_Proj1_MG : MonoBehaviour
 {
     [SerializeField] MoveSystem _moveSystem;
     [SerializeField] AttackSystem _attackSystem;

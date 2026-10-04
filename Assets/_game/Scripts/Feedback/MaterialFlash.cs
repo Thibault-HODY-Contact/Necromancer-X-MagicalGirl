@@ -37,7 +37,7 @@ public class MaterialFlash : MonoBehaviour
         }
     }
 
-    void Flash()
+    public void Flash()
     {
         for (int i = 0; i < _renderers.Count; i++)
         {

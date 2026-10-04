@@ -957,7 +957,7 @@ PrefabInstance:
     - target: {fileID: 1978876121684267214, guid: ff18b98bab20e1f49872ff11659304e5, type: 3}
       propertyPath: _necromancerPrefab
       value: 
-      objectReference: {fileID: 2349204002147550335, guid: d173a89ff8d99cc45bed572017b5003b, type: 3}
+      objectReference: {fileID: 2349204002147550335, guid: b8949c6089c85894a8cdde1318e94ef5, type: 3}
     - target: {fileID: 1978876121684267214, guid: ff18b98bab20e1f49872ff11659304e5, type: 3}
       propertyPath: _playerInputManager
       value: 
