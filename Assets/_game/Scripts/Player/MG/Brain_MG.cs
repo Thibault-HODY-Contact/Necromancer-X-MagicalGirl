@@ -11,8 +11,8 @@ public class Brain_MG : MonoBehaviour
 
     [SerializeField] MoveSystem _moveSystem;
     [SerializeField] LookSystem _lookSystem;
-    [SerializeField] ShootSystem _shootSystem;
-    [SerializeField] ShootSystem _shoot2System;
+    [SerializeField] Attack1_MG _attack1;
+    [SerializeField] Attack2_MG _attack2;
 
 
     PlayerInput _playerInput; 
@@ -21,11 +21,7 @@ public class Brain_MG : MonoBehaviour
     InputAction _attackAction;
     InputAction _attack2Action;
 
-    Brain_Proj2_MG _competence2Projectile;
-    bool _wasLookEnabled;
-
-    public bool IsUsingCompetence2 => _competence2Projectile != null
-        || (_shoot2System != null && _shoot2System.HasPendingShoot);
+    public bool IsUsingCompetence2 => _attack2 != null && _attack2.IsAttacking;
 
     // Clocks
     [SerializeField, ReadOnly] float _competence1Timer = 0f;
@@ -62,18 +58,17 @@ public class Brain_MG : MonoBehaviour
 
         _competence1Timer = _competence1Cooldown;
 
-        _attackAction.canceled += _shootSystem.CancelShoot;
+        _attackAction.canceled += CancelAttack1;
         #endregion
 
         #region Attack2
-        if (_attack2Input != null && _shoot2System != null)
+        if (_attack2Input != null && _attack2 != null)
         {
             _attack2Action = _playerInput.actions.FindAction(_attack2Input.action.id);
 
             _competence2Timer = _competence2Cooldown;
 
-            _attack2Action.canceled += _shoot2System.CancelShoot;
-            _shoot2System.OnShoot += OnShoot2;
+            _attack2Action.canceled += CancelAttack2;
         }
         #endregion
     }
@@ -88,17 +83,11 @@ public class Brain_MG : MonoBehaviour
         _lookAction.performed -= UpdateLook;
         _lookAction.canceled -= UpdateLook;
 
-        _attackAction.canceled -= _shootSystem.CancelShoot;
+        _attackAction.canceled -= CancelAttack1;
 
         if (_attack2Action != null)
         {
-            _attack2Action.canceled -= _shoot2System.CancelShoot;
-            _shoot2System.OnShoot -= OnShoot2;
-
-            if (_competence2Projectile != null)
-            {
-                EndCompetence2();
-            }
+            _attack2Action.canceled -= CancelAttack2;
         }
     }
 
@@ -110,52 +99,35 @@ public class Brain_MG : MonoBehaviour
         if (IsUsingCompetence2) return;
 
         if (_attack2Action != null && _attack2Action.IsPressed()
-            && _competence2Timer == 0 && _shoot2System.CanShoot)
+            && _competence2Timer == 0 && _attack2.CanAttack)
         {
-            _shootSystem.CancelShoot();
-            _shoot2System.Shoot();
+            _attack1.CancelAttack();
+            _attack2.StartAttack();
             _competence2Timer = _competence2Cooldown;
             return;
         }
 
-        if (_attackAction.IsPressed() && _competence1Timer == 0 && _shootSystem.CanShoot)
+        if (_attackAction.IsPressed() && _competence1Timer == 0 && _attack1.CanAttack)
         {
-            _shootSystem.Shoot();
+            _attack1.StartAttack();
             _competence1Timer = _competence1Cooldown;
         }
     }
 
-    void OnShoot2()
+    void OnDisable()
     {
-        _competence2Projectile = _shoot2System.LastProjectile.GetComponentInChildren<Brain_Proj2_MG>();
-        if (_competence2Projectile == null) return;
-
-        _wasLookEnabled = _lookSystem.enabled;
-        _lookSystem.enabled = false;
-
-        _competence2Projectile.Rotated += Rotate;
-        _competence2Projectile.Finished += EndCompetence2;
+        if (_attack1 != null) _attack1.CancelAttack();
+        if (_attack2 != null) _attack2.StopAttack();
     }
 
-    void Rotate(float angle)
+    void CancelAttack1(InputAction.CallbackContext context)
     {
-        _lookSystem.Rotate(angle);
+        _attack1.CancelAttack();
     }
 
-    void EndCompetence2()
+    void CancelAttack2(InputAction.CallbackContext context)
     {
-        if (_competence2Projectile != null)
-        {
-            _competence2Projectile.Rotated -= Rotate;
-            _competence2Projectile.Finished -= EndCompetence2;
-        }
-
-        _competence2Projectile = null;
-
-        if (_lookSystem != null)
-        {
-            _lookSystem.enabled = _wasLookEnabled;
-        }
+        _attack2.CancelAttack();
     }
 
     void UpdateMove(InputAction.CallbackContext context)

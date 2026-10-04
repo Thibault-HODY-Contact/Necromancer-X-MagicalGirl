@@ -15,6 +15,7 @@ public class ShootSystem : MonoBehaviour
     public bool CanShoot => _delayTimer == 0f && !_hasShoot;
     public bool HasPendingShoot => _hasShoot;
     public GameObject LastProjectile { get; private set; }
+    public Transform ShootPoint => _shootPoint;
 
     public Action OnShoot;
 

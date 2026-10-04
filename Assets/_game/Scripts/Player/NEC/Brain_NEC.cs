@@ -5,26 +5,27 @@ public class Brain_NEC : MonoBehaviour
 {
     [SerializeField] InputActionReference _movementInput;
     [SerializeField] InputActionReference _lookInput;
+    [SerializeField] InputActionReference _attackInput;
     [SerializeField] InputActionReference _attack2Input;
 
     [SerializeField] MoveSystem _moveSystem;
     [SerializeField] LookSystem _lookSystem;
-    [SerializeField] AttackSystem _attack2System;
-    [SerializeField] TeleportationSystem _teleportationSystem;
+    [SerializeField] Attack1_NEC _attack1;
+    [SerializeField] Attack2_NEC _attack2;
+
+    [SerializeField, ReadOnly] float _competence1Timer = 0f;
+    [SerializeField] float _competence1Cooldown = 0.5f;
 
     [SerializeField, ReadOnly] float _competence2Timer = 0f;
     [SerializeField] float _competence2Cooldown = 2f;
-    [SerializeField, Min(0f)] float _teleportationDelay = 0.25f;
-    [SerializeField, ReadOnly] float _teleportationTimer;
 
     PlayerInput _playerInput;
     InputAction _moveAction;
     InputAction _lookAction;
+    InputAction _attackAction;
     InputAction _attack2Action;
 
-    bool _wasMoveEnabled;
-    bool _wasLookEnabled;
-    public bool IsUsingCompetence2 { get; private set; }
+    public bool IsUsingCompetence2 => _attack2.IsAttacking;
 
     void Start()
     {
@@ -39,52 +40,39 @@ public class Brain_NEC : MonoBehaviour
         _lookAction.performed += UpdateLook;
         _lookAction.canceled += UpdateLook;
 
+        _attackAction = _playerInput.actions.FindAction(_attackInput.action.id);
+        _attackAction.canceled += CancelAttack1;
+        _competence1Timer = _competence1Cooldown;
+
         _attack2Action = _playerInput.actions.FindAction(_attack2Input.action.id);
     }
 
     void Update()
     {
+        _competence1Timer = Mathf.Max(0f, _competence1Timer - Time.deltaTime);
         _competence2Timer = Mathf.Max(0f, _competence2Timer - Time.deltaTime);
 
-        if (IsUsingCompetence2)
-        {
-            _teleportationTimer = Mathf.Max(0f, _teleportationTimer - Time.deltaTime);
-            if (_teleportationTimer > 0f) return;
+        if (IsUsingCompetence2) return;
 
-            _attack2System.StopAttack();
-            _teleportationSystem.Teleport();
-            _attack2System.Attack(ignoreDelay: true);
-            EndCompetence2();
+        if (_attack2Action.IsPressed() && _competence2Timer == 0f && _attack2.CanAttack)
+        {
+            _attack1.CancelAttack();
+            _attack2.StartAttack();
+            _competence2Timer = _competence2Cooldown;
             return;
         }
 
-        if (_attack2Action.IsPressed() && _competence2Timer == 0f && _attack2System.CanAttack)
+        if (_attackAction.IsPressed() && _competence1Timer == 0f && _attack1.CanAttack)
         {
-            _wasMoveEnabled = _moveSystem.enabled;
-            _wasLookEnabled = _lookSystem.enabled;
-            _moveSystem.enabled = false;
-            _lookSystem.enabled = false;
-
-            IsUsingCompetence2 = true;
-            _teleportationTimer = _teleportationDelay;
-            _competence2Timer = _competence2Cooldown;
-            _attack2System.Attack();
+            _attack1.StartAttack();
+            _competence1Timer = _competence1Cooldown;
         }
-    }
-
-    void EndCompetence2()
-    {
-        IsUsingCompetence2 = false;
-        _teleportationTimer = 0f;
-
-        if (_moveSystem != null) _moveSystem.enabled = _wasMoveEnabled;
-        if (_lookSystem != null) _lookSystem.enabled = _wasLookEnabled;
     }
 
     void OnDisable()
     {
-        if (IsUsingCompetence2) EndCompetence2();
-        if (_attack2System != null) _attack2System.StopAttack();
+        if (_attack1 != null) _attack1.StopAttack();
+        if (_attack2 != null) _attack2.StopAttack();
     }
 
     void OnDestroy()
@@ -95,6 +83,12 @@ public class Brain_NEC : MonoBehaviour
         _moveAction.canceled -= UpdateMove;
         _lookAction.performed -= UpdateLook;
         _lookAction.canceled -= UpdateLook;
+        _attackAction.canceled -= CancelAttack1;
+    }
+
+    void CancelAttack1(InputAction.CallbackContext context)
+    {
+        _attack1.CancelAttack();
     }
 
     void UpdateMove(InputAction.CallbackContext context)

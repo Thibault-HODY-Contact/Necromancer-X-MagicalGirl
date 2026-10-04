@@ -189,42 +189,35 @@ public class AttackSystem : MonoBehaviour
     private void HandleContact(Collider source, Collider target)
     {
         GameObject root = target.transform.root.gameObject;
+        bool canDamage = _damageableTags.Contains(root.tag);
+        bool canKnockback = _knockbackableTags.Contains(root.tag);
+        if (!canDamage && !canKnockback) return;
 
-        foreach (string tag in _damageableTags)
+        HitboxSettings settings = _hitboxes.Find(candidate => candidate.hitbox.Collider == source);
+        if (settings == null) return;
+
+        Debug.Log($"{target.name} est touché par {source.name}");
+        OnHit?.Invoke();
+
+        if (canDamage)
         {
             LifeSystem lifeSystem = root.GetComponentInChildren<LifeSystem>();
+            if (lifeSystem != null) lifeSystem.TakeDamage(settings.Damage);
+        }
+
+        if (canKnockback)
+        {
             KnockbackSystem knockbackSystem = root.GetComponentInChildren<KnockbackSystem>();
-            if (root.CompareTag(tag))
+            if (knockbackSystem == null) return;
+
+            if (settings.KnockbackType == KnockbackType.AttackerForward)
             {
-                Debug.Log($"{target.name} est touché par {source.name}");
-
-                HitboxSettings settings = _hitboxes.Find(candidate => candidate.hitbox.Collider == source);
-
-                if (settings == null) return;
-
-                OnHit?.Invoke();
-
-                if (lifeSystem != null)
-                {
-                    lifeSystem.TakeDamage(settings.Damage);
-                }
-                if (knockbackSystem != null)
-                {
-                    if (settings.KnockbackType == KnockbackType.AttackerForward)
-                    {
-                        knockbackSystem.Knockback(settings.Knockback, source.transform.forward);
-                    }
-                    else if (settings.KnockbackType == KnockbackType.AwayFromAttacker)
-                    {
-                        GameObject rootSource = source.transform.root.gameObject;
-                        GameObject rootTarget = target.transform.root.gameObject;
-                        Vector3 knockbackDirection = (rootTarget.transform.position - rootSource.transform.position);
-                        knockbackSystem.Knockback(settings.Knockback, new Vector3(knockbackDirection.x, 0, knockbackDirection.z).normalized);
-                    }
-                }
-
-                
-                break;
+                knockbackSystem.Knockback(settings.Knockback, source.transform.forward);
+            }
+            else if (settings.KnockbackType == KnockbackType.AwayFromAttacker)
+            {
+                Vector3 knockbackDirection = root.transform.position - source.transform.root.position;
+                knockbackSystem.Knockback(settings.Knockback, new Vector3(knockbackDirection.x, 0, knockbackDirection.z).normalized);
             }
         }
     }

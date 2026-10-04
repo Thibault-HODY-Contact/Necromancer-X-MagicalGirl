@@ -28,7 +28,6 @@ public class TeleportationSystem : MonoBehaviour
         if (direction.sqrMagnitude < 0.01f) return;
         direction.Normalize();
 
-        // Le déplacement utilise Transform : synchroniser avant les requêtes physiques.
         Physics.SyncTransforms();
 
         float distance = _distance;
@@ -48,7 +47,6 @@ public class TeleportationSystem : MonoBehaviour
             Vector3 top = bounds.center + offset;
             Vector3 bottom = bounds.center - offset;
 
-            // Le rayon choisit l'arrivée ; la capsule évite de rentrer dans un bord de mur.
             if (Physics.CheckCapsule(top, bottom, radius, _blockingLayers, QueryTriggerInteraction.Ignore)) return;
 
             if (Physics.CapsuleCast(top, bottom, radius, direction, out hit,
