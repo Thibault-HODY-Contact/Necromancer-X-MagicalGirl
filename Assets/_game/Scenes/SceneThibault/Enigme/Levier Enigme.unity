@@ -426,9 +426,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1915967492296223415, guid: 7dd4aee9656c70a4b9f21ec9b4be6f99, type: 3}
+      propertyPath: _hitboxes.Array.data[0]._damage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1915967492296223415, guid: 7dd4aee9656c70a4b9f21ec9b4be6f99, type: 3}
+      propertyPath: _hitboxes.Array.data[0]._knockback
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7690434629494981683, guid: 7dd4aee9656c70a4b9f21ec9b4be6f99, type: 3}
       propertyPath: m_StoppingDistance
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

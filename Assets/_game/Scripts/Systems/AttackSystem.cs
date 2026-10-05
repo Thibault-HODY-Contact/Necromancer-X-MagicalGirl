@@ -189,8 +189,8 @@ public class AttackSystem : MonoBehaviour
     private void HandleContact(Collider source, Collider target)
     {
         GameObject root = target.transform.root.gameObject;
-        bool canDamage = _damageableTags.Contains(root.tag);
-        bool canKnockback = _knockbackableTags.Contains(root.tag);
+        bool canDamage = _damageableTags.Contains(target.tag);
+        bool canKnockback = _knockbackableTags.Contains(target.tag);
         if (!canDamage && !canKnockback) return;
 
         HitboxSettings settings = _hitboxes.Find(candidate => candidate.hitbox.Collider == source);
