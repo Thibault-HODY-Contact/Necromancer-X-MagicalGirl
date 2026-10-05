@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,6 +21,13 @@ public class Brain_MG : MonoBehaviour
     InputAction _lookAction;
     InputAction _attackAction;
     InputAction _attack2Action;
+
+    public Action OnAttack1Started;
+    public Action OnAttack1Stoped;
+
+    public Action OnAttack2Started;
+    public Action OnAttack2Stoped;
+
 
     public bool IsUsingCompetence2 => _attack2 != null && _attack2.IsAttacking;
 
@@ -103,6 +111,7 @@ public class Brain_MG : MonoBehaviour
         {
             _attack1.CancelAttack();
             _attack2.StartAttack();
+            OnAttack2Started?.Invoke();
             _competence2Timer = _competence2Cooldown;
             return;
         }
@@ -110,6 +119,7 @@ public class Brain_MG : MonoBehaviour
         if (_attackAction.IsPressed() && _competence1Timer == 0 && _attack1.CanAttack)
         {
             _attack1.StartAttack();
+            OnAttack1Started?.Invoke();
             _competence1Timer = _competence1Cooldown;
         }
     }
@@ -123,11 +133,13 @@ public class Brain_MG : MonoBehaviour
     void CancelAttack1(InputAction.CallbackContext context)
     {
         _attack1.CancelAttack();
+        OnAttack1Stoped?.Invoke();
     }
 
     void CancelAttack2(InputAction.CallbackContext context)
     {
         _attack2.CancelAttack();
+        OnAttack2Stoped?.Invoke();
     }
 
     void UpdateMove(InputAction.CallbackContext context)
