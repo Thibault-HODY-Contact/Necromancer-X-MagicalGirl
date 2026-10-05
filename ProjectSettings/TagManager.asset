@@ -7,6 +7,7 @@ TagManager:
   - Player1
   - Player2
   - FxTemporaire
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -18,6 +19,9 @@ TagManager:
   - PlayerInteractor
   - CommandGray
   - CommandHighlight
+  - 
+  - Environment
+  - Environment_TP
   - 
   - 
   - 

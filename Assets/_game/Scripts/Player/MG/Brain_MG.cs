@@ -6,17 +6,22 @@ public class Brain_MG : MonoBehaviour
     [SerializeField] InputActionReference _movementInput; 
     [SerializeField] InputActionReference _lookInput;
     [SerializeField] InputActionReference _attackInput;
+    [SerializeField] InputActionReference _attack2Input;
 
 
     [SerializeField] MoveSystem _moveSystem;
     [SerializeField] LookSystem _lookSystem;
-    [SerializeField] ShootSystem _shootSystem;
+    [SerializeField] Attack1_MG _attack1;
+    [SerializeField] Attack2_MG _attack2;
 
 
     PlayerInput _playerInput; 
     InputAction _moveAction; 
     InputAction _lookAction;
     InputAction _attackAction;
+    InputAction _attack2Action;
+
+    public bool IsUsingCompetence2 => _attack2 != null && _attack2.IsAttacking;
 
     // Clocks
     [SerializeField, ReadOnly] float _competence1Timer = 0f;
@@ -53,7 +58,18 @@ public class Brain_MG : MonoBehaviour
 
         _competence1Timer = _competence1Cooldown;
 
-        _attackAction.canceled += _shootSystem.CancelShoot;
+        _attackAction.canceled += CancelAttack1;
+        #endregion
+
+        #region Attack2
+        if (_attack2Input != null && _attack2 != null)
+        {
+            _attack2Action = _playerInput.actions.FindAction(_attack2Input.action.id);
+
+            _competence2Timer = _competence2Cooldown;
+
+            _attack2Action.canceled += CancelAttack2;
+        }
         #endregion
     }
 
@@ -67,18 +83,51 @@ public class Brain_MG : MonoBehaviour
         _lookAction.performed -= UpdateLook;
         _lookAction.canceled -= UpdateLook;
 
-        _attackAction.canceled -= _shootSystem.CancelShoot;
+        _attackAction.canceled -= CancelAttack1;
+
+        if (_attack2Action != null)
+        {
+            _attack2Action.canceled -= CancelAttack2;
+        }
     }
 
     void Update()
     {
         _competence1Timer = Mathf.Max(0, _competence1Timer - Time.deltaTime);
+        _competence2Timer = Mathf.Max(0, _competence2Timer - Time.deltaTime);
 
-        if (_attackAction.IsPressed() && _competence1Timer == 0 && _shootSystem.CanShoot)
+        if (IsUsingCompetence2) return;
+
+        if (_attack2Action != null && _attack2Action.IsPressed()
+            && _competence2Timer == 0 && _attack2.CanAttack)
         {
-            _shootSystem.Shoot();
+            _attack1.CancelAttack();
+            _attack2.StartAttack();
+            _competence2Timer = _competence2Cooldown;
+            return;
+        }
+
+        if (_attackAction.IsPressed() && _competence1Timer == 0 && _attack1.CanAttack)
+        {
+            _attack1.StartAttack();
             _competence1Timer = _competence1Cooldown;
         }
+    }
+
+    void OnDisable()
+    {
+        if (_attack1 != null) _attack1.CancelAttack();
+        if (_attack2 != null) _attack2.StopAttack();
+    }
+
+    void CancelAttack1(InputAction.CallbackContext context)
+    {
+        _attack1.CancelAttack();
+    }
+
+    void CancelAttack2(InputAction.CallbackContext context)
+    {
+        _attack2.CancelAttack();
     }
 
     void UpdateMove(InputAction.CallbackContext context)
