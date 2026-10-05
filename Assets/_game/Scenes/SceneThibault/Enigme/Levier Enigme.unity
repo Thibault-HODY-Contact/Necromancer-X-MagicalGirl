@@ -1035,7 +1035,7 @@ PrefabInstance:
     - target: {fileID: 1978876121684267214, guid: ff18b98bab20e1f49872ff11659304e5, type: 3}
       propertyPath: _necromancerPrefab
       value: 
-      objectReference: {fileID: 2349204002147550335, guid: d173a89ff8d99cc45bed572017b5003b, type: 3}
+      objectReference: {fileID: 2349204002147550335, guid: b8949c6089c85894a8cdde1318e94ef5, type: 3}
     - target: {fileID: 1978876121684267214, guid: ff18b98bab20e1f49872ff11659304e5, type: 3}
       propertyPath: _playerInputManager
       value: 
@@ -1248,6 +1248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1752a6f8fc8133c4faf5f464e9dbefad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackHitbox
+  _hitOnceUntilExit: 0
 --- !u!114 &1915967491071041714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1263,12 +1264,16 @@ MonoBehaviour:
   _hitboxes:
   - hitbox: {fileID: 1890387829918374671}
     _delay: 0.1
-    isActivated: 0
+    _delayTimer: 0
     _duration: 0.5
+    _durationTimer: 0
+    isActivated: 0
     isDesactivated: 0
-    damage: 10
-    knockback: 1
-  _cooldown: 0.5
+    _damage: 0
+    _knockback: 0
+    _knockbackType: 0
+  _damageableTags: []
+  _knockbackableTags: []
 --- !u!4 &2769446170252781021
 Transform:
   m_ObjectHideFlags: 0
