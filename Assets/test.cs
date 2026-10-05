@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// TEST uniquement : conversion et envoi d'alliés sans le sort.
 // C : convertir l'ennemi   T : envoyer les alliés au levier   Y : annuler les ordres
 public class TestConvert : MonoBehaviour
 {
