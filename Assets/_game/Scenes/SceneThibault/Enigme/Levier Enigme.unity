@@ -426,6 +426,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7690434629494981683, guid: 7dd4aee9656c70a4b9f21ec9b4be6f99, type: 3}
+      propertyPath: m_StoppingDistance
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -607,7 +611,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1018ff3d75f291647941476409042bb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevierBase
-  _Interact: {fileID: -8315193906023800339, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  _Interact: {fileID: -4450372721912237796, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _numberOfPNJRequiredToInteract: 1
   _interactionPointList:
   - {fileID: 1440027045}
