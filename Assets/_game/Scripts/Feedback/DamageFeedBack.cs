@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CharacterFeedback : MonoBehaviour
+public class DamageFeedBack : MonoBehaviour
 {
     [SerializeField] LifeSystem _lifeSystem;
 

@@ -189,8 +189,8 @@ public class AttackSystem : MonoBehaviour
     private void HandleContact(Collider source, Collider target)
     {
         GameObject root = target.transform.root.gameObject;
-        bool canDamage = _damageableTags.Contains(root.tag);
-        bool canKnockback = _knockbackableTags.Contains(root.tag);
+        bool canDamage = _damageableTags.Contains(target.tag);
+        bool canKnockback = _knockbackableTags.Contains(target.tag);
         if (!canDamage && !canKnockback) return;
 
         HitboxSettings settings = _hitboxes.Find(candidate => candidate.hitbox.Collider == source);
@@ -198,11 +198,12 @@ public class AttackSystem : MonoBehaviour
 
         Debug.Log($"{target.name} est touché par {source.name}");
         OnHit?.Invoke();
+        LifeSystem lifeSystem = root.GetComponentInChildren<LifeSystem>();
 
         if (canDamage)
         {
-            LifeSystem lifeSystem = root.GetComponentInChildren<LifeSystem>();
             if (lifeSystem != null) lifeSystem.TakeDamage(settings.Damage);
+  
         }
 
         if (canKnockback)
@@ -218,6 +219,23 @@ public class AttackSystem : MonoBehaviour
             {
                 Vector3 knockbackDirection = root.transform.position - source.transform.root.position;
                 knockbackSystem.Knockback(settings.Knockback, new Vector3(knockbackDirection.x, 0, knockbackDirection.z).normalized);
+            }
+        }
+
+        if (lifeSystem.IsDead && root.GetComponentInChildren<ConvertSystem>())
+        {
+            ConvertSystem _convertSystem = root.GetComponentInChildren<ConvertSystem>();
+
+            if (source.transform.root.gameObject.GetComponent<Projectile>())
+            {
+                _convertSystem.onDeathConvert(source.transform.root.gameObject.GetComponent<Projectile>().Owner.gameObject);
+                Debug.Log("killer");
+            }
+            else
+            {
+                Debug.Log("killer");
+                _convertSystem.onDeathConvert(source.transform.root.gameObject);
+
             }
         }
     }
