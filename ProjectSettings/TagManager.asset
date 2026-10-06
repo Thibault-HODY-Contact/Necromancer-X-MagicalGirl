@@ -9,6 +9,8 @@ TagManager:
   - NEC
   - MG
   - Player2
+  - AllyMG
+  - AllyNEC
   layers:
   - Default
   - TransparentFX

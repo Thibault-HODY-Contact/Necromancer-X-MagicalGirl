@@ -28,6 +28,8 @@ public class LifeSystem : MonoBehaviour
         }
     }
 
+
+
     public bool IsDead => _health == 0;
 
     public Action<int, int> OnHeal;
@@ -63,4 +65,5 @@ public class LifeSystem : MonoBehaviour
 
         Debug.Log($"{gameObject.name} health is now {Health}.");
     }
+
 }
