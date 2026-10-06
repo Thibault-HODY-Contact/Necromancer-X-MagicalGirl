@@ -9,7 +9,7 @@ public class ControllerDetector : MonoBehaviour
     int _nombreManette = 0;
     InputDevice _Keyboard;
     List<InputDevice> _ManettesList = new List<InputDevice>();
-
+    public event System.Action OnManettesChanged;
     public InputDevice Keyboard
     {
         get { return _Keyboard; }
@@ -87,5 +87,6 @@ public class ControllerDetector : MonoBehaviour
             _ManettesList.Remove(_device);
 
         }
+        OnManettesChanged?.Invoke();
     }
 }

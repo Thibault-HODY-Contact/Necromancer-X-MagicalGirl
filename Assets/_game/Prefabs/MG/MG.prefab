@@ -747,7 +747,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -1462,6 +1462,7 @@ MonoBehaviour:
   _lookInput: {fileID: -5630151704836100654, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _attackInput: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _attack2Input: {fileID: 2048990373054029759, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  _aimInput: {fileID: -6740745131694731223, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _moveSystem: {fileID: 142525723517999929}
   _lookSystem: {fileID: 1266321477452126445}
   _attack1: {fileID: 915071010000000001}
@@ -1570,6 +1571,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LookSystem
   _rootTransform: {fileID: 8469934477241360710}
+  _camera: {fileID: 3093137117527125142}
+  _rotationSpeed: 720
+  _minAimDistance: 0.5
 --- !u!1 &6626099989304287810
 GameObject:
   m_ObjectHideFlags: 0
@@ -2035,7 +2039,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1

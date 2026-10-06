@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,6 +8,7 @@ public class Brain_NEC : MonoBehaviour
     [SerializeField] InputActionReference _lookInput;
     [SerializeField] InputActionReference _attackInput;
     [SerializeField] InputActionReference _attack2Input;
+    [SerializeField] InputActionReference _aimInput;
 
     [SerializeField] MoveSystem _moveSystem;
     [SerializeField] LookSystem _lookSystem;
@@ -24,7 +26,7 @@ public class Brain_NEC : MonoBehaviour
     InputAction _lookAction;
     InputAction _attackAction;
     InputAction _attack2Action;
-
+    InputAction _aimAction;
     public bool IsUsingCompetence2 => _attack2.IsAttacking;
 
     void Start()
@@ -39,6 +41,9 @@ public class Brain_NEC : MonoBehaviour
         _lookAction = _playerInput.actions.FindAction(_lookInput.action.id);
         _lookAction.performed += UpdateLook;
         _lookAction.canceled += UpdateLook;
+
+        _aimAction = _playerInput.actions.FindAction(_aimInput.action.id);
+        _aimAction.performed += UpdateAim;
 
         _attackAction = _playerInput.actions.FindAction(_attackInput.action.id);
         _attackAction.canceled += CancelAttack1;
@@ -84,6 +89,14 @@ public class Brain_NEC : MonoBehaviour
         _lookAction.performed -= UpdateLook;
         _lookAction.canceled -= UpdateLook;
         _attackAction.canceled -= CancelAttack1;
+        _aimAction.performed -= UpdateAim;
+
+    }
+
+    private void UpdateAim(InputAction.CallbackContext context)
+    {
+        _lookSystem.AimScreenPosition = context.ReadValue<Vector2>();
+        _lookSystem.UseMouseAim = true;
     }
 
     void CancelAttack1(InputAction.CallbackContext context)
@@ -99,5 +112,6 @@ public class Brain_NEC : MonoBehaviour
     void UpdateLook(InputAction.CallbackContext context)
     {
         _lookSystem.LookDirection = context.ReadValue<Vector2>();
+        _lookSystem.UseMouseAim = false;             
     }
 }

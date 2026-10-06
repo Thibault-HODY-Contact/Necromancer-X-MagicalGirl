@@ -8,6 +8,7 @@ public class Brain_MG : MonoBehaviour
     [SerializeField] InputActionReference _lookInput;
     [SerializeField] InputActionReference _attackInput;
     [SerializeField] InputActionReference _attack2Input;
+    [SerializeField] InputActionReference _aimInput;
 
 
     [SerializeField] MoveSystem _moveSystem;
@@ -21,6 +22,7 @@ public class Brain_MG : MonoBehaviour
     InputAction _lookAction;
     InputAction _attackAction;
     InputAction _attack2Action;
+    InputAction _aimAction;
 
     public Action OnAttack1Started;
     public Action OnAttack1Stoped;
@@ -59,6 +61,9 @@ public class Brain_MG : MonoBehaviour
 
         _lookAction.performed += UpdateLook;
         _lookAction.canceled += UpdateLook;
+
+        _aimAction = _playerInput.actions.FindAction(_aimInput.action.id);
+        _aimAction.performed += UpdateAim;
         #endregion
 
         #region Attack
@@ -94,6 +99,7 @@ public class Brain_MG : MonoBehaviour
         _lookAction.canceled -= UpdateLook;
 
         _attackAction.canceled -= CancelAttack1;
+        _aimAction.performed -= UpdateAim;
 
         if (_attack2Action != null)
         {
@@ -161,5 +167,11 @@ public class Brain_MG : MonoBehaviour
     void UpdateLook(InputAction.CallbackContext context)
     {
         _lookSystem.LookDirection = context.ReadValue<Vector2>();
+    }
+
+    private void UpdateAim(InputAction.CallbackContext context)
+    {
+        _lookSystem.AimScreenPosition = context.ReadValue<Vector2>();
+        _lookSystem.UseMouseAim = true;
     }
 }

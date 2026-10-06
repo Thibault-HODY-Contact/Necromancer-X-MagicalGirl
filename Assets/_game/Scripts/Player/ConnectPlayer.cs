@@ -8,6 +8,9 @@ public class ConnectPlayer : MonoBehaviour
     [SerializeField] GameObject _necromancerPrefab;
     [SerializeField] GameObject _magicalGirlPrefab;
 
+    [SerializeField] Transform _SpawnNEC ;
+    [SerializeField] Transform _SpawnMG;
+
     // Garder les références pour le changement de scène
     static InputDevice[] s_devices;
     static List<int> s_characters;
@@ -42,10 +45,18 @@ public class ConnectPlayer : MonoBehaviour
         {
             // on change le préfab du manager pour faire apparaitre le bon perso du joueur
             if (s_characters[i] == -1)
+            {
+                _necromancerPrefab.transform.position = _SpawnNEC.position;
+
                 _playerInputManager.playerPrefab = _necromancerPrefab;
+            }
             else
+            {
+                _magicalGirlPrefab.transform.position = _SpawnMG.position;
+
                 _playerInputManager.playerPrefab = _magicalGirlPrefab;
 
+            }
             if (s_devices[i] is Keyboard)
                 _playerInputManager.JoinPlayer(i, -1, "Keyboard&Mouse", s_devices[i], Mouse.current);
             else

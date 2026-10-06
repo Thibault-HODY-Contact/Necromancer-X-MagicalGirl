@@ -131,7 +131,7 @@ Transform:
   m_GameObject: {fileID: 698057016015400271}
   serializedVersion: 2
   m_LocalRotation: {x: 0.6427886, y: -0, z: -0, w: 0.76604366}
-  m_LocalPosition: {x: 0, y: 11.847011, z: -1.9175037}
+  m_LocalPosition: {x: 0, y: 12, z: -1.9175037}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -560,7 +560,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MaterialFlash
   _visualRoot: {fileID: 6096743681105966137}
-  _lifeSystem: {fileID: 7773380453363272729}
   _flashMaterial: {fileID: 2100000, guid: a576aee5a09fa8f43ae3635dc493d7c7, type: 2}
   _flashDuration: 0.1
   _flashTimer: 0
@@ -1416,6 +1415,7 @@ MonoBehaviour:
   _lookInput: {fileID: -5630151704836100654, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _attackInput: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _attack2Input: {fileID: 2048990373054029759, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  _aimInput: {fileID: -6740745131694731223, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _moveSystem: {fileID: 142525723517999929}
   _lookSystem: {fileID: 1266321477452126445}
   _attack1: {fileID: 915073010000000003}
@@ -1524,6 +1524,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LookSystem
   _rootTransform: {fileID: 8469934477241360710}
+  _camera: {fileID: 3093137117527125142}
+  _rotationSpeed: 720
+  _minAimDistance: 0.5
 --- !u!1 &6626099989304287810
 GameObject:
   m_ObjectHideFlags: 0

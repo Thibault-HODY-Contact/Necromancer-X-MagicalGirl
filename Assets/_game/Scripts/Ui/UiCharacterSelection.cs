@@ -12,7 +12,6 @@ public class UiCharacterSelection : MonoBehaviour
 
     [SerializeField] GameObject[] _rootList;
     [SerializeField] InputSystemUIInputModule[] _uiModules; // Les différents EventSystem pour que chaque joueur control son ui de séléction
-    [SerializeField] Toggle[] _uiToggles;                   
 
 
     [SerializeField] ControllerDetector _detector;
@@ -25,13 +24,12 @@ public class UiCharacterSelection : MonoBehaviour
     bool _gameStarted = false;
 
     InputDevice[] _playerDevices = new InputDevice[2]; // [0] = J1, [1] = J2
-    bool[] _playerReady = new bool[2];                 // [0] = J1, [1] = J2
 
     List<int> _CharacterChoose = new List<int> { 0, 0 }; // -1 = necromancer, 1 = MagicalGirl
 
-    public void onLeftButton(int _playerId)
+    int[] _lastDirection = new int[2];
+    private void onLeftButton(int _playerId)
     {
-        if (_playerReady[_playerId]) return; // on verrouille le choix quand le joueur est prêt
         if (_CharacterChoose[_playerId] == -1) return;
 
         for (int i = 0; i < _CharacterChoose.Count; i++)
@@ -45,9 +43,8 @@ public class UiCharacterSelection : MonoBehaviour
         _CharacterChoose[_playerId] = -1;
     }
 
-    public void onRightButton(int _playerId)
+    private void onRightButton(int _playerId)
     {
-        if (_playerReady[_playerId]) return; // on verrouille le choix quand le joueur est prêt
         if (_CharacterChoose[_playerId] == 1) return;
 
         for (int i = 0; i < _CharacterChoose.Count; i++)
@@ -60,13 +57,29 @@ public class UiCharacterSelection : MonoBehaviour
         }
         _CharacterChoose[_playerId] = 1;
     }
-    public void OnReadyButton(int playerId)
+    void ReadMoveInput(int playerId)
     {
-        _playerReady[playerId] = _uiToggles[playerId].isOn;
+        float x = _uiModules[playerId].move.action.ReadValue<Vector2>().x;
+        if(x < 0) x = -1;
+        else if(x > 0) x = 1;
+        if (x!=0 && x != _lastDirection[playerId])
+        {
+            if (x < 0)
+                onLeftButton(playerId);
+            else
+                onRightButton(playerId);
+            _lastDirection[playerId] = (int)x;
+        }
+        else if(x == 0)
+        {
+            _lastDirection[playerId] = 0;
+        }
+
+
     }
 
     // On verifie si le joueur peux se mettre en prêt 
-    bool CanBeReady(int playerId)
+    bool HasChosen(int playerId)
     {
         if (_playerDevices[playerId] == null)
             return false; // Pas de périphérique
@@ -104,7 +117,46 @@ public class UiCharacterSelection : MonoBehaviour
 
         RestrictUIToDevice(playerId);
     }
+    bool IsFree(InputDevice device)
+    {
+        if(_playerDevices[0] == device || _playerDevices[1] == device)
+            return false;
+        else { 
+            return true;
+        }
+    }
 
+    void SetDevice(int playerId, InputDevice device)
+    {
+        _playerDevices[playerId] = device;
+        RestrictUIToDevice(playerId);
+    }
+
+    void AutoAssignDevices()
+    {
+        for (int i = 0; i < _playerDevices.Length; i++)
+        {
+            if (_playerDevices[i] == null)
+            {
+                foreach (var manette in _detector.ManettesList)
+                {
+                    if (IsFree(manette))
+                    {
+                        SetDevice(i, manette);
+                        break;
+                    }
+                }
+                if (_playerDevices[i] == null && _detector.Keyboard != null && IsFree(_detector.Keyboard))
+                {
+                    SetDevice(i, _detector.Keyboard);
+                }
+                if (_playerDevices[i] == null && _detector.Keyboard != null && IsFree(_detector.Keyboard))
+                {
+                    SetDevice(i, _detector.Keyboard);
+                }
+            }
+        }
+    }
     void Start()
     {
         for (int i = 0; i < _uiModules.Length; i++)
@@ -112,8 +164,13 @@ public class UiCharacterSelection : MonoBehaviour
             // Chaque joueur a sa propre copie des actions UI pour pas écraser les bindings de l'autre joueur
             _uiModules[i].actionsAsset = Instantiate(_uiModules[i].actionsAsset);
 
-            OnChangeDeviceButton(i);
         }
+        AutoAssignDevices();                                // après la boucle
+        _detector.OnManettesChanged += AutoAssignDevices;   // en dernier
+    }
+    private void OnDestroy()
+    {
+        _detector.OnManettesChanged -= AutoAssignDevices; ;
     }
 
     void Update()
@@ -126,11 +183,9 @@ public class UiCharacterSelection : MonoBehaviour
                 _playerDevices[i] = null;
                 RestrictUIToDevice(i);
             }
+            ReadMoveInput(i);
 
-            bool canBeReady = CanBeReady(i);
-            _uiToggles[i].interactable = canBeReady;
 
-            if (!canBeReady) _uiToggles[i].isOn = false;
         }
 
         if (_playerDevices[0] != null)
@@ -166,10 +221,10 @@ public class UiCharacterSelection : MonoBehaviour
     {
         if (_gameStarted) return;
 
-        bool bothReady = _playerReady[0] && _playerReady[1];
+        bool bothChose = HasChosen(0) && HasChosen(1);
 
         // Si un joueur n'est pas prêt, le compte à rebours repart du début
-        if (!bothReady)
+        if (!bothChose)
         {
             _countdownTimer = _countdownDuration;
             _countdownText.text = "";
