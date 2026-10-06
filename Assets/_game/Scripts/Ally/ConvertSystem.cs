@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -7,6 +8,9 @@ public class ConvertSystem : MonoBehaviour
     [SerializeField] GameObject _ModelNEC_ally;
     [SerializeField] GameObject _ModelMG_ally;
 
+    [SerializeField] DeathFeedback _Feedback;
+
+    public Action<GameObject> OnConvert;
     void Start()
     {
     }
@@ -19,6 +23,7 @@ public class ConvertSystem : MonoBehaviour
             Transform actualTransform = transform.root;
             GameObject NewModel = Instantiate(_ModelNEC_ally, actualTransform.position , actualTransform.rotation);
             GameManager.Instance.Necromancian.GetComponentInChildren<PlayerCommander>().Convert(NewModel);
+            OnConvert?.Invoke(Killer);
             Destroy(transform.root.gameObject);
         }
         else if (Killer != null && Killer == GameManager.Instance.MagicalGirl )
@@ -26,6 +31,7 @@ public class ConvertSystem : MonoBehaviour
             Transform actualTransform = transform.root;
             GameObject NewModel = Instantiate(_ModelMG_ally, actualTransform.position, actualTransform.rotation);
             GameManager.Instance.MagicalGirl.GetComponentInChildren<PlayerCommander>().Convert(NewModel);
+            OnConvert?.Invoke(Killer);
 
             Destroy(transform.root.gameObject);
 

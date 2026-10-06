@@ -259,6 +259,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   _ModelNEC_ally: {fileID: 48132213009703703, guid: 35bee07f0894e0b4a812ab29250a5e0d, type: 3}
   _ModelMG_ally: {fileID: 48132213009703703, guid: 58d05cbdc0107e14bb0e4870d19fef8b, type: 3}
+  _Feedback: {fileID: 0}
 --- !u!1 &468033144181482620
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,6 +270,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2840739174898301417}
   - component: {fileID: 8870616483980112298}
+  - component: {fileID: 384935996797858005}
   m_Layer: 0
   m_Name: Feedback
   m_TagString: Untagged
@@ -319,6 +321,24 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &384935996797858005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 468033144181482620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6b31a9694e8b3a40b05be1fd0d3cfa3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeathFeedback
+  _FXConvertToMG: {fileID: 1259440405115824722, guid: 0b6b51d8204d1014dadd5801074c1de8, type: 3}
+  _FXConvertToNEC: {fileID: 6570219114777829139, guid: 948339ce10e64334daae8bf423a6805e, type: 3}
+  _convertSystem: {fileID: 8582761601613040079}
+  _onDeathFeedback:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1361237717429548938
 GameObject:
   m_ObjectHideFlags: 0
@@ -551,7 +571,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MaterialFlash
   _visualRoot: {fileID: 174384785047399690}
-  _lifeSystem: {fileID: 7288582790927405248}
   _flashMaterial: {fileID: 2100000, guid: a576aee5a09fa8f43ae3635dc493d7c7, type: 2}
   _flashDuration: 0.1
   _flashTimer: 0
