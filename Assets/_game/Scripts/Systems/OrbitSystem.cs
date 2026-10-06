@@ -4,7 +4,11 @@ using UnityEngine;
 public class OrbitSystem : MonoBehaviour
 {
     [SerializeField] Transform _rootTransform;
-    [SerializeField, Min(0f)] float _radius = 2f;
+    [SerializeField, Min(0f)] float _startRadius = 2f;
+    [SerializeField, Min(0f)] float _endRadius = 5f;
+    [SerializeField, Min(0f)] float _startScale = 1f;
+    [SerializeField, Min(0f)] float _endScale = 1f;
+    [SerializeField, Min(0f)] float _targetAngle = 360f;
     [SerializeField, Min(0f)] float _speed = 180f;
     [SerializeField, Min(0f)] float _acceleration = 180f;
     [SerializeField] float _height = 1f;
@@ -14,19 +18,24 @@ public class OrbitSystem : MonoBehaviour
     [SerializeField, ReadOnly] float _rotationAngle;
     [SerializeField, ReadOnly] float _currentSpeed;
 
+    Vector3 _initialScale;
+
+    public float TargetAngle => _targetAngle;
+
     public float Duration
     {
         get
         {
             if (_acceleration > 0f)
             {
-                // Temps nécessaire pour parcourir 360 degrés avec une accélération constante.
-                return 720f / (_speed + Mathf.Sqrt(_speed * _speed + 720f * _acceleration));
+                float doubleAngle = 2f * _targetAngle;
+                return doubleAngle / (_speed + Mathf.Sqrt(_speed * _speed + doubleAngle * _acceleration));
             }
 
-            return _speed > 0f ? 360f / _speed : 0f;
+            return _speed > 0f ? _targetAngle / _speed : 0f;
         }
     }
+
     public bool IsOrbiting { get; private set; }
 
     public event Action<float> Rotated;
@@ -43,6 +52,8 @@ public class OrbitSystem : MonoBehaviour
         {
             _rootTransform = transform.root;
         }
+
+        _initialScale = _rootTransform.localScale;
     }
 
     public void Orbit(Transform center)
@@ -72,14 +83,14 @@ public class OrbitSystem : MonoBehaviour
         float deltaTime = Time.deltaTime;
         float rotation = _currentSpeed * deltaTime + 0.5f * _acceleration * deltaTime * deltaTime;
         _currentSpeed += _acceleration * deltaTime;
-        rotation = Mathf.Min(rotation, 360f - _rotationAngle);
+        rotation = Mathf.Min(rotation, _targetAngle - _rotationAngle);
         _rotationAngle += rotation;
         _angle = Mathf.Repeat(_angle + rotation, 360f);
         UpdatePosition();
 
         Rotated?.Invoke(rotation);
 
-        if (_rotationAngle >= 360f)
+        if (_rotationAngle >= _targetAngle)
         {
             IsOrbiting = false;
             Completed?.Invoke();
@@ -88,9 +99,14 @@ public class OrbitSystem : MonoBehaviour
 
     void UpdatePosition()
     {
-        Vector3 offset = Quaternion.AngleAxis(_angle, Vector3.up) * (Vector3.forward * _radius);
+        float progress = _targetAngle > 0f ? Mathf.Clamp01(_rotationAngle / _targetAngle) : 1f;
+        float currentRadius = Mathf.Lerp(_startRadius, _endRadius, progress);
+        float currentScale = Mathf.Lerp(_startScale, _endScale, progress);
+
+        Vector3 offset = Quaternion.AngleAxis(_angle, Vector3.up) * (Vector3.forward * currentRadius);
 
         _rootTransform.position = _center.position + offset + Vector3.up * _height;
         _rootTransform.forward = Quaternion.AngleAxis(_angle, Vector3.up) * Vector3.forward;
+        _rootTransform.localScale = _initialScale * currentScale;
     }
 }

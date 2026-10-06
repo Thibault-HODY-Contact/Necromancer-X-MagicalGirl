@@ -77,12 +77,14 @@ public class Brain_MG : MonoBehaviour
             _competence2Timer = _competence2Cooldown;
 
             _attack2Action.canceled += CancelAttack2;
+            _attack2.Finished += OnAttack2Finished;
         }
         #endregion
     }
 
     void OnDestroy()
     {
+        if (_attack2 != null) _attack2.Finished -= OnAttack2Finished;
         if (_moveAction == null) return;
 
         _moveAction.performed -= UpdateMove;
@@ -104,9 +106,14 @@ public class Brain_MG : MonoBehaviour
         _competence1Timer = Mathf.Max(0, _competence1Timer - Time.deltaTime);
         _competence2Timer = Mathf.Max(0, _competence2Timer - Time.deltaTime);
 
-        if (IsUsingCompetence2) return;
+        if (IsUsingCompetence2)
+        {
+            if (_attack2Action != null && _attack2Action.WasPressedThisFrame())
+                _attack2.StartAttack();
+            return;
+        }
 
-        if (_attack2Action != null && _attack2Action.IsPressed()
+        if (_attack2Action != null && _attack2Action.WasPressedThisFrame()
             && _competence2Timer == 0 && _attack2.CanAttack)
         {
             _attack1.CancelAttack();
@@ -139,6 +146,10 @@ public class Brain_MG : MonoBehaviour
     void CancelAttack2(InputAction.CallbackContext context)
     {
         _attack2.CancelAttack();
+    }
+
+    void OnAttack2Finished()
+    {
         OnAttack2Stoped?.Invoke();
     }
 

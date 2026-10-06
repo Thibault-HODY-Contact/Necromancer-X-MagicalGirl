@@ -8,6 +8,7 @@ public class Feedback_MG : MonoBehaviour
     [SerializeField] Animator _animator;
     [SerializeField] ShootSystem _shootSystem1;
     [SerializeField] ShootSystem _shootSystem2;
+    [SerializeField] ShootSystem _shootSystem2Follow;
 
     bool _isAttacking1 = false;
     bool _isAttackingRight = true;
@@ -43,6 +44,7 @@ public class Feedback_MG : MonoBehaviour
 
         if (_shootSystem1 != null) _shootSystem1.OnShoot += OnAttack1Shoot;
         if (_shootSystem2 != null) _shootSystem2.OnShoot += OnAttack2Shoot;
+        if (_shootSystem2Follow != null) _shootSystem2Follow.OnShoot += OnAttack2Shoot;
     }
 
     void OnDisable()
@@ -58,6 +60,7 @@ public class Feedback_MG : MonoBehaviour
 
         if (_shootSystem1 != null) _shootSystem1.OnShoot -= OnAttack1Shoot;
         if (_shootSystem2 != null) _shootSystem2.OnShoot -= OnAttack2Shoot;
+        if (_shootSystem2Follow != null) _shootSystem2Follow.OnShoot -= OnAttack2Shoot;
         _isAttack1Prepared = false;
     }
 

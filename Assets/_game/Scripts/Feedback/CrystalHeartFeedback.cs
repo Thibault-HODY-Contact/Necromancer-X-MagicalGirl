@@ -13,6 +13,7 @@ public class CrystalHeartFeedback : MonoBehaviour
     float _timer;
     bool _wasLightEnabled;
     bool _isGrowing;
+    bool _isHeld;
     bool _initialized;
 
     void Awake()
@@ -35,14 +36,37 @@ public class CrystalHeartFeedback : MonoBehaviour
         if (_crystalHeart == null || !isActiveAndEnabled) return;
         Initialize();
 
+        _isHeld = false;
         _timer = 0f;
         _isGrowing = true;
         UpdateScale();
     }
 
+    public void HoldHeart()
+    {
+        if (_crystalHeart == null || !isActiveAndEnabled) return;
+
+        HideHeart();
+        _isHeld = true;
+    }
+
+    public void ReleaseHeart()
+    {
+        if (!_isHeld) return;
+
+        _isHeld = false;
+        HideHeart();
+    }
+
     void LateUpdate()
     {
         if (!_isGrowing || _crystalHeart == null) return;
+
+        if (_isHeld)
+        {
+            ApplySize(0f);
+            return;
+        }
 
         _timer += Time.deltaTime;
         if (_timer < 0f)
@@ -77,6 +101,7 @@ public class CrystalHeartFeedback : MonoBehaviour
 
     void OnDisable()
     {
+        _isHeld = false;
         _isGrowing = false;
         if (_initialized)
             ApplySize(1f);

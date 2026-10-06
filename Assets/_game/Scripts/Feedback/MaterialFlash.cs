@@ -6,7 +6,6 @@ public class MaterialFlash : MonoBehaviour
 {
     [SerializeField] GameObject _visualRoot;
 
-    [SerializeField] LifeSystem _lifeSystem;
     [SerializeField] Material _flashMaterial;
 
     [SerializeField, Min(0f)] float _flashDuration;

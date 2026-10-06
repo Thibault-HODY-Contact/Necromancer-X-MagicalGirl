@@ -40,6 +40,11 @@ public class LifeSystem : MonoBehaviour
         _health = _maxHealth;
     }
 
+    private void Start()
+    {
+        _health = _maxHealth;
+    }
+
     public void Heal(int amount) {
         if (IsDead) return;
 

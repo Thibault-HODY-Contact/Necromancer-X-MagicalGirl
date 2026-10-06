@@ -296,6 +296,7 @@ Transform:
   m_Children:
   - {fileID: 6777979165578008879}
   - {fileID: 3291458009529675552}
+  - {fileID: 7090523035139644458}
   m_Father: {fileID: 7952254558456692705}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4111010044759185135
@@ -343,14 +344,63 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OrbitSystem
   _rootTransform: {fileID: 7952254558456692705}
-  _radius: 2
-  _speed: 180
-  _acceleration: 180
+  _startRadius: 0.5
+  _endRadius: 2.5
+  _startScale: 0.1
+  _endScale: 1
+  _targetAngle: 720
+  _speed: 360
+  _acceleration: 360
   _height: 1
   _center: {fileID: 0}
   _angle: 0
   _rotationAngle: 0
   _currentSpeed: 0
+--- !u!1 &4205796197813508788
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7090523035139644458}
+  - component: {fileID: 5213917072704431926}
+  m_Layer: 0
+  m_Name: ParticleTrail
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7090523035139644458
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4205796197813508788}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2267031321684694538}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5213917072704431926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4205796197813508788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50a618c5822248339b46c36159c95b4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ParticleTrailFeedback
+  _particlePrefab: {fileID: 9198115000497283284, guid: 62140ac58d2d93e49a6a7afdb84174fb, type: 3}
 --- !u!1 &4684344564245168567
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,7 +413,7 @@ GameObject:
   - component: {fileID: 7811330041453029011}
   - component: {fileID: 7811330041453029012}
   m_Layer: 0
-  m_Name: Proj2_MG
+  m_Name: Proj2_Start_MG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
