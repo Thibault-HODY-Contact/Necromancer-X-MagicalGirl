@@ -1,0 +1,121 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8c37405fa4e2e8448a670e92ef87e85, type: 3}
+  m_Name: DialogDatabase
+  m_EditorClassIdentifier: ALTUSHKA.EasyNodeDialogSystem.Data::ALTUSHKA.EasyNodeDialogSystem.DialogDatabase
+  _currentLanguage: en
+  _categories:
+  - Unnamed
+  - Main Story
+  - Side Quests
+  - NPC
+  - Tutorial
+  _dialogs:
+  - dialogName: New Dialog
+    initiator: Main Story
+    conditions: []
+    isAndLogic: 1
+    isLocked: 0
+    nodes:
+    - NodeType: 0
+      nodeId: 87e14b87-abc6-4c66-8c41-58ff63939f34
+      Position: {x: 72, y: 34}
+      StartData:
+        NextNodeId: 0032d6dc-7cbd-4560-ae33-db0a8377c92e
+      LineData:
+        CharacterName: 
+        CharacterReferenceState: 0
+        MissingCharacterReferenceLabel: 
+        CharacterActions: []
+        DialogsText: []
+        NextNodeId: 
+        isInstant: 0
+      ChoiceData: []
+      ConditionData:
+        DialogConditions: []
+        IsAndLogic: 1
+        TrueNodeId: 
+        FalseNodeId: 
+      RedirectData:
+        TargetCategory: 
+        TargetDialogName: 
+        DialogReferenceState: 0
+        MissingDialogReferenceLabel: 
+    - NodeType: 1
+      nodeId: 0032d6dc-7cbd-4560-ae33-db0a8377c92e
+      Position: {x: 342, y: 103}
+      StartData:
+        NextNodeId: 
+      LineData:
+        CharacterName: 
+        CharacterReferenceState: 0
+        MissingCharacterReferenceLabel: 
+        CharacterActions: []
+        DialogsText:
+        - LanguageCode: ru
+          SayerName: 
+          Text: 
+          VoiceClip: {fileID: 0}
+        - LanguageCode: en
+          SayerName: 
+          Text: 
+          VoiceClip: {fileID: 0}
+        NextNodeId: 
+        isInstant: 0
+      ChoiceData: []
+      ConditionData:
+        DialogConditions: []
+        IsAndLogic: 1
+        TrueNodeId: 
+        FalseNodeId: 
+      RedirectData:
+        TargetCategory: 
+        TargetDialogName: 
+        DialogReferenceState: 0
+        MissingDialogReferenceLabel: 
+  - dialogName: New Dialog(1)
+    initiator: Side Quests
+    conditions: []
+    isAndLogic: 1
+    isLocked: 0
+    nodes:
+    - NodeType: 0
+      nodeId: a2700264-adc5-4697-baef-adf9befa486a
+      Position: {x: 100, y: 100}
+      StartData:
+        NextNodeId: 
+      LineData:
+        CharacterName: 
+        CharacterReferenceState: 0
+        MissingCharacterReferenceLabel: 
+        CharacterActions: []
+        DialogsText: []
+        NextNodeId: 
+        isInstant: 0
+      ChoiceData: []
+      ConditionData:
+        DialogConditions: []
+        IsAndLogic: 1
+        TrueNodeId: 
+        FalseNodeId: 
+      RedirectData:
+        TargetCategory: 
+        TargetDialogName: 
+        DialogReferenceState: 0
+        MissingDialogReferenceLabel: 
+  _availableLanguages:
+  - ru
+  - en
+  _characterNameColors: []
+  _variables: []
+  _characterGroups: []
+  _voiceClipsEnabled: 1

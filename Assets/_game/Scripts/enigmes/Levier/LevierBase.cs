@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class LevierBase : InteractInterface
@@ -7,6 +8,8 @@ public class LevierBase : InteractInterface
     
     bool _isOn = false;
     public bool isOn {  get { return _isOn; } private set { _isOn = value; } }
+    [SerializeField] UnityEvent _isOnEvent = new UnityEvent();
+    [SerializeField] UnityEvent _isOffEvent = new UnityEvent();
 
     override public void OnInteract (InputAction.CallbackContext context) 
     {
@@ -25,7 +28,16 @@ public class LevierBase : InteractInterface
     {
         isOn = !isOn;
 
-        _animator.SetBool("isOn", isOn);
+        if (_isOn)
+        {
+            _isOnEvent?.Invoke();
+        }
+        else
+        {
+            _isOffEvent?.Invoke();
+        }
+
+            _animator.SetBool("isOn", isOn);
         _animator.SetTrigger("wasClicked");
 
     }
