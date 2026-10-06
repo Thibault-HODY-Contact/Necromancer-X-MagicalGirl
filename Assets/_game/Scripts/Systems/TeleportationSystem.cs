@@ -12,6 +12,8 @@ public class TeleportationSystem : MonoBehaviour
     [SerializeField, Min(0f)] float _wallMargin = 0.05f;
     [SerializeField] LayerMask _blockingLayers;
 
+    public float Distance => _distance;
+
     void Reset()
     {
         _rootTransform = transform.root;
@@ -23,6 +25,13 @@ public class TeleportationSystem : MonoBehaviour
 
     public void Teleport()
     {
+        Teleport(_distance);
+    }
+
+    public void Teleport(float distance)
+    {
+        distance = Mathf.Clamp(distance, 0f, Mathf.Max(0f, _distance));
+
         Vector3 direction = _directionTransform.forward;
         direction.y = 0f;
         if (direction.sqrMagnitude < 0.01f) return;
@@ -30,11 +39,10 @@ public class TeleportationSystem : MonoBehaviour
 
         Physics.SyncTransforms();
 
-        float distance = _distance;
         float radius = _bodyCollider != null ? _bodyCollider.radius : 0f;
 
         if (Physics.Raycast(_raycastPoint.position, direction, out RaycastHit hit,
-            _distance + radius + _wallMargin, _blockingLayers, QueryTriggerInteraction.Ignore))
+            distance + radius + _wallMargin, _blockingLayers, QueryTriggerInteraction.Ignore))
         {
             distance = Mathf.Clamp(hit.distance - radius - _wallMargin, 0f, distance);
         }

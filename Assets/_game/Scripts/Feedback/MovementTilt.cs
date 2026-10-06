@@ -13,7 +13,6 @@ public class MovementTilt : MonoBehaviour
 
     void Update()
     {
-        // Retire l'inclinaison précédente avant que l'Animator pose le bone.
         RemoveTilt();
     }
 
@@ -38,7 +37,6 @@ public class MovementTilt : MonoBehaviour
             tilt = Quaternion.AngleAxis(_tiltAngle * _moveDirection.magnitude, axis);
         }
 
-        // Convertit l'inclinaison du monde vers le parent du bone.
         Transform parent = _bone.parent;
         _appliedTilt = parent == null
             ? tilt

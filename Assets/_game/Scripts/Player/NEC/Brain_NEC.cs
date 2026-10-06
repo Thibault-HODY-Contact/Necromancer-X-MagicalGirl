@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,6 +26,11 @@ public class Brain_NEC : MonoBehaviour
     InputAction _attackAction;
     InputAction _attack2Action;
 
+    public Action OnAttack1Started;
+    public Action OnAttack1Stoped;
+    public Action OnAttack2Started;
+    public Action OnAttack2Stoped;
+
     public bool IsUsingCompetence2 => _attack2.IsAttacking;
 
     void Start()
@@ -45,6 +51,7 @@ public class Brain_NEC : MonoBehaviour
         _competence1Timer = _competence1Cooldown;
 
         _attack2Action = _playerInput.actions.FindAction(_attack2Input.action.id);
+        _attack2.Finished += OnAttack2Finished;
     }
 
     void Update()
@@ -52,19 +59,28 @@ public class Brain_NEC : MonoBehaviour
         _competence1Timer = Mathf.Max(0f, _competence1Timer - Time.deltaTime);
         _competence2Timer = Mathf.Max(0f, _competence2Timer - Time.deltaTime);
 
-        if (IsUsingCompetence2) return;
+        if (IsUsingCompetence2)
+        {
+            if (_attack2.IsCharging && !_attack2Action.IsPressed())
+            {
+                _attack2.ReleaseAttack();
+                _competence2Timer = _competence2Cooldown;
+            }
+            return;
+        }
 
         if (_attack2Action.IsPressed() && _competence2Timer == 0f && _attack2.CanAttack)
         {
             _attack1.CancelAttack();
             _attack2.StartAttack();
-            _competence2Timer = _competence2Cooldown;
+            OnAttack2Started?.Invoke();
             return;
         }
 
         if (_attackAction.IsPressed() && _competence1Timer == 0f && _attack1.CanAttack)
         {
             _attack1.StartAttack();
+            OnAttack1Started?.Invoke();
             _competence1Timer = _competence1Cooldown;
         }
     }
@@ -77,6 +93,7 @@ public class Brain_NEC : MonoBehaviour
 
     void OnDestroy()
     {
+        if (_attack2 != null) _attack2.Finished -= OnAttack2Finished;
         if (_moveAction == null) return;
 
         _moveAction.performed -= UpdateMove;
@@ -89,6 +106,12 @@ public class Brain_NEC : MonoBehaviour
     void CancelAttack1(InputAction.CallbackContext context)
     {
         _attack1.CancelAttack();
+        OnAttack1Stoped?.Invoke();
+    }
+
+    void OnAttack2Finished()
+    {
+        OnAttack2Stoped?.Invoke();
     }
 
     void UpdateMove(InputAction.CallbackContext context)
