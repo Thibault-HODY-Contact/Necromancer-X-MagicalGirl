@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_game/Scenes/Ryad/TestMovesets.unity
     guid: 6797dcb1764626b4fbcffbc5df40a5e8
+  - enabled: 1
+    path: Assets/_game/Scenes/SceneThibault/Levels/Level1.unity
+    guid: 5d64907906664fa44994c338d445b102
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
