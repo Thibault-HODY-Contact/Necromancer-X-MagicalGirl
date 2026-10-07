@@ -259,6 +259,18 @@ public class AttackSystem : MonoBehaviour
             settings.isActivated = false;
             settings.isDesactivated = false;
         }
+
+        if (!ignoreDelay) return;
+
+        // Une attaque immédiate active aussi la physique et ses feedbacks dans cet appel.
+        foreach (HitboxSettings settings in _hitboxes)
+        {
+            settings.isActivated = true;
+            settings.hitbox.Collider.enabled = true;
+            Activated?.Invoke();
+
+            if (!isActiveAndEnabled || !IsAttacking) return;
+        }
     }
 
     public void StopAttack()
