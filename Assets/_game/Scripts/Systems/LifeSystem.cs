@@ -70,5 +70,9 @@ public class LifeSystem : MonoBehaviour
 
         Debug.Log($"{gameObject.name} health is now {Health}.");
     }
-
+    public void Revive()
+    {
+        OnHeal?.Invoke(_health, _maxHealth);
+        Health = _maxHealth;
+    }
 }
