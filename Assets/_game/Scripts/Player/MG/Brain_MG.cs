@@ -45,7 +45,7 @@ public class Brain_MG : MonoBehaviour
     {
         #region PlayerInput
         _playerInput = GetComponent<PlayerInput>();
-
+        _playerInput.actions.Disable();                
         _playerInput.SwitchCurrentActionMap("Player");
         #endregion
 
