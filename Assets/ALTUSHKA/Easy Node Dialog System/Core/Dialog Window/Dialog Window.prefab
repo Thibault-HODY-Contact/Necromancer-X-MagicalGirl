@@ -426,6 +426,7 @@ GameObject:
   - component: {fileID: 6785646720452531974}
   - component: {fileID: 3397140025693190614}
   - component: {fileID: 4593421557441010451}
+  - component: {fileID: 1896676542499273317}
   m_Layer: 0
   m_Name: Dialog Window
   m_TagString: Untagged
@@ -533,6 +534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3731228f05deebe44915b009f65767ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: ALTUSHKA.EasyNodeDialogSystem.Core::ALTUSHKA.EasyNodeDialogSystem.DialogLegacyInput
+  _dialogInteract: {fileID: 0}
 --- !u!114 &6785646720452531974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -657,6 +659,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: ALTUSHKA.EasyNodeDialogSystem.Core::ALTUSHKA.EasyNodeDialogSystem.DialogDebugger
   _logToConsole: 1
   _showOnTextBar: 0
+--- !u!114 &1896676542499273317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544761347525706086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c12895bdc8634447bbfeda598e81e6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogInputBridge
 --- !u!1 &3119060482736322952
 GameObject:
   m_ObjectHideFlags: 0
@@ -976,7 +990,6 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: -1
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0

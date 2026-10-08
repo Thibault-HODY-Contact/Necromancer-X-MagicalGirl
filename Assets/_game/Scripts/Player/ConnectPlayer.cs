@@ -5,17 +5,16 @@ using UnityEngine.InputSystem;
 public class ConnectPlayer : MonoBehaviour
 {
     [SerializeField] PlayerInputManager _playerInputManager;
+
     [SerializeField] GameObject _necromancerPrefab;
     [SerializeField] GameObject _magicalGirlPrefab;
 
-    [SerializeField] Transform _SpawnNEC ;
+    [SerializeField] Transform _SpawnNEC;
     [SerializeField] Transform _SpawnMG;
 
-    // Garder les références pour le changement de scène
     static InputDevice[] s_devices;
     static List<int> s_characters;
 
-    // transmet les périphériques et les personnages choisis par les joueurs 
     public static void SetPlayers(InputDevice[] devices, List<int> characters)
     {
         s_devices = devices;
@@ -32,7 +31,6 @@ public class ConnectPlayer : MonoBehaviour
                 return;
             }
 
-            Debug.LogWarning("Aucun joueur choisi : lance le jeu depuis le menu de sélection.");
             return;
         }
 
@@ -41,26 +39,47 @@ public class ConnectPlayer : MonoBehaviour
 
     void JoinPlayers()
     {
+        GameManager gameManager = GameManager.Instance;
+
         for (int i = 0; i < s_devices.Length; i++)
         {
-            // on change le préfab du manager pour faire apparaitre le bon perso du joueur
-            if (s_characters[i] == -1)
+            bool isNecromancer = s_characters[i] == -1;
+
+            _playerInputManager.playerPrefab = GetPlayerPrefab(isNecromancer, gameManager);
+
+            PlayerInput player = s_devices[i] is Keyboard
+                ? _playerInputManager.JoinPlayer(i, -1, "Keyboard&Mouse", s_devices[i], Mouse.current)
+                : _playerInputManager.JoinPlayer(i, -1, "Gamepad", s_devices[i]);
+
+            if (player == null)
             {
-                _necromancerPrefab.transform.position = _SpawnNEC.position;
-
-                _playerInputManager.playerPrefab = _necromancerPrefab;
+                continue;
             }
-            else
+
+            Transform root = player.transform.root;
+            root.position = isNecromancer ? _SpawnNEC.position : _SpawnMG.position;
+
+            if (gameManager != null)
             {
-                _magicalGirlPrefab.transform.position = _SpawnMG.position;
-
-                _playerInputManager.playerPrefab = _magicalGirlPrefab;
-
+                gameManager.RestoreAllies(root.gameObject, isNecromancer);
             }
-            if (s_devices[i] is Keyboard)
-                _playerInputManager.JoinPlayer(i, -1, "Keyboard&Mouse", s_devices[i], Mouse.current);
-            else
-                _playerInputManager.JoinPlayer(i, -1, "Gamepad", s_devices[i]);
         }
+
+        if (gameManager != null)
+        {
+            gameManager.ClearNextPlayerPrefabs();
+        }
+    }
+
+    GameObject GetPlayerPrefab(bool isNecromancer, GameManager gameManager)
+    {
+        GameObject nextPrefab = null;
+        if (gameManager != null)
+        {
+            nextPrefab = isNecromancer ? gameManager.NextNecromancianPrefab : gameManager.NextMagicalGirlPrefab;
+        }
+
+        if (nextPrefab != null) return nextPrefab;
+        return isNecromancer ? _necromancerPrefab : _magicalGirlPrefab;
     }
 }
