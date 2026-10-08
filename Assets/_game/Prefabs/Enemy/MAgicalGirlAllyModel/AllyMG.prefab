@@ -334,10 +334,8 @@ MonoBehaviour:
     _knockbackType: 0
   _damageableTags:
   - NEC
-  - MG
   _knockbackableTags:
   - NEC
-  - MG
 --- !u!1 &1798668954351472388
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,8 +507,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MaterialFlash
   _visualRoot: {fileID: 174384785047399690}
   _flashMaterial: {fileID: 2100000, guid: a576aee5a09fa8f43ae3635dc493d7c7, type: 2}
-  _whiteFlashMaterial: {fileID: 0}
-  _whiteFlashDuration: 0.1
   _flashDuration: 0.1
   _flashTimer: 0
 --- !u!1 &7506744928436850758
