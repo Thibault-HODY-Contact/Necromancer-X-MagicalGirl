@@ -1286,8 +1286,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MaterialFlash
   _visualRoot: {fileID: 6096743681105966137}
   _flashMaterial: {fileID: 2100000, guid: a576aee5a09fa8f43ae3635dc493d7c7, type: 2}
-  _whiteFlashMaterial: {fileID: 0}
-  _whiteFlashDuration: 0.1
   _flashDuration: 0.5
   _flashTimer: 0
 --- !u!1 &4703365770733732591
