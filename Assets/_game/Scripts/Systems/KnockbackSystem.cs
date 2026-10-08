@@ -7,8 +7,6 @@ public class KnockbackSystem : MonoBehaviour
 
     public Action<int, Vector2> OnKnockback;
 
-
-
     public void Knockback(int Amount, Vector3 direction)
     {
         _rb.linearVelocity = Vector3.zero;

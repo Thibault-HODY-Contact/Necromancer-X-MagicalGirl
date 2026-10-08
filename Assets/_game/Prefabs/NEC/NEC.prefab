@@ -130,8 +130,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 698057016015400271}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.6427886, y: -0, z: -0, w: 0.76604366}
-  m_LocalPosition: {x: 0, y: 12, z: -1.9175037}
+  m_LocalRotation: {x: 0.6427886, y: -0.00000022829893, z: 0.00000019156579, w: 0.76604366}
+  m_LocalPosition: {x: 0, y: 11.847011, z: -1.9175037}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -281,7 +281,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6120621091384116917}
-  - component: {fileID: 7489937668096506422}
   - component: {fileID: 2799241729697342295}
   m_Layer: 0
   m_Name: KnockbackSystem
@@ -305,20 +304,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5903182923767179866}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7489937668096506422
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 767063514185308103}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5650de6fc7bcf6b4c8e6ba8a2b6861d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LifeSystem
-  _maxHealth: 100
-  _health: 100
 --- !u!114 &2799241729697342295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -526,7 +511,7 @@ GameObject:
   - component: {fileID: 6229086380387144847}
   - component: {fileID: 6879885914348822913}
   m_Layer: 0
-  m_Name: OnHitFlash
+  m_Name: RedFlash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -561,8 +546,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MaterialFlash
   _visualRoot: {fileID: 6096743681105966137}
   _flashMaterial: {fileID: 2100000, guid: a576aee5a09fa8f43ae3635dc493d7c7, type: 2}
-  _whiteFlashMaterial: {fileID: 2100000, guid: 0c54d95fc39edee44bff3cecb5c4e757, type: 2}
-  _whiteFlashDuration: 0.1
   _flashDuration: 0.1
   _flashTimer: 0
 --- !u!1 &1807668591650085081
@@ -870,7 +853,7 @@ Transform:
   m_GameObject: {fileID: 3550894781442291254}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 1.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -896,7 +879,7 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 2
+  m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3912967385646456897
@@ -1099,6 +1082,7 @@ MonoBehaviour:
   - Enemy
   _knockbackableTags:
   - Enemy
+  - MG
 --- !u!1 &4907972240687927834
 GameObject:
   m_ObjectHideFlags: 0
@@ -1111,6 +1095,7 @@ GameObject:
   - component: {fileID: 1422797764061930792}
   - component: {fileID: 4523140562331839167}
   - component: {fileID: 7742647889965733467}
+  - component: {fileID: 6010775724690302977}
   m_Layer: 0
   m_Name: Attack2Feedback
   m_TagString: Untagged
@@ -1221,6 +1206,23 @@ MonoBehaviour:
   _chargeNoise: {fileID: 158911913091400356}
   _startChargeAmplitude: 0.1
   _endChargeAmplitude: 0.4
+--- !u!114 &6010775724690302977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4907972240687927834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88c0eca7c338fe45b8c5ce11ee56e12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChargeShakeFeedback
+  _visualRoot: {fileID: 2673781218671860710}
+  _attack2: {fileID: 915071010000000003}
+  _startAmplitude: 0.01
+  _endAmplitude: 0.055
+  _frequency: 35
 --- !u!1 &5003433074655766501
 GameObject:
   m_ObjectHideFlags: 0
@@ -1474,6 +1476,54 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LifeSystem
   _maxHealth: 100
   _health: 100
+--- !u!1 &6016800304546493574
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7710884673519704983}
+  - component: {fileID: 92747941858006504}
+  m_Layer: 0
+  m_Name: WhiteFlash
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7710884673519704983
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6016800304546493574}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2673781218671860710}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &92747941858006504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6016800304546493574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d22a2ae15d93d442b2aefaf761b91e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaterialFlash
+  _visualRoot: {fileID: 6096743681105966137}
+  _flashMaterial: {fileID: 2100000, guid: 0c54d95fc39edee44bff3cecb5c4e757, type: 2}
+  _flashDuration: 0.1
+  _flashTimer: 0
 --- !u!1 &6096743681105966137
 GameObject:
   m_ObjectHideFlags: 0
@@ -1485,8 +1535,6 @@ GameObject:
   - component: {fileID: 2673781218671860710}
   - component: {fileID: 3004762322019386857}
   - component: {fileID: 9157737149399777169}
-  - component: {fileID: 1884397752239559661}
-  - component: {fileID: 5879872122792888639}
   m_Layer: 0
   m_Name: Render
   m_TagString: Untagged
@@ -1510,6 +1558,7 @@ Transform:
   - {fileID: 1382077304235481757}
   - {fileID: 1475417064033065219}
   - {fileID: 6229086380387144847}
+  - {fileID: 7710884673519704983}
   - {fileID: 8856876205550817968}
   m_Father: {fileID: 8469934477241360710}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1551,186 +1600,6 @@ MonoBehaviour:
   _moveSystem: {fileID: 142525723517999929}
   _tiltAngle: 20
   _tiltSpeed: 10
---- !u!114 &1884397752239559661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6096743681105966137}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6ab69812c818304c9b2d913e5bc132c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Feedback_NEC
-  _brain: {fileID: 8577765934520820637}
-  _animator: {fileID: 5030014084308271335}
-  _attack2: {fileID: 915071010000000003}
-  _attackSystem2: {fileID: 1789437288244258581}
-  _onAttack1Started:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1884397752239559661}
-        m_TargetAssemblyTypeName: Feedback_NEC, Assembly-CSharp
-        m_MethodName: StartAttack1
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _onAttack1Stoped:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1884397752239559661}
-        m_TargetAssemblyTypeName: Feedback_NEC, Assembly-CSharp
-        m_MethodName: StopAttack1
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _onAttack2Started:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1884397752239559661}
-        m_TargetAssemblyTypeName: Feedback_NEC, Assembly-CSharp
-        m_MethodName: StartAttack2
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _onAttack2Stoped:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1884397752239559661}
-        m_TargetAssemblyTypeName: Feedback_NEC, Assembly-CSharp
-        m_MethodName: StopAttack2
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _onAttack2HitboxActivated:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1422797764061930792}
-        m_TargetAssemblyTypeName: ParticleFeedback, Assembly-CSharp
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7742647889965733467}
-        m_TargetAssemblyTypeName: CameraShakeFeedback, Assembly-CSharp
-        m_MethodName: Shake
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _onAttack2HitboxDesactivated:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1422797764061930792}
-        m_TargetAssemblyTypeName: ParticleFeedback, Assembly-CSharp
-        m_MethodName: Stop
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _onAttack2ChargeStarted:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7742647889965733467}
-        m_TargetAssemblyTypeName: CameraShakeFeedback, Assembly-CSharp
-        m_MethodName: StartCharge
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _onAttack2ChargeStoped:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7742647889965733467}
-        m_TargetAssemblyTypeName: CameraShakeFeedback, Assembly-CSharp
-        m_MethodName: StopCharge
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _onAttack2FullyCharged:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6879885914348822913}
-        m_TargetAssemblyTypeName: MaterialFlash, Assembly-CSharp
-        m_MethodName: FlashWhite
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &5879872122792888639
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6096743681105966137}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f88c0eca7c338fe45b8c5ce11ee56e12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ChargeShakeFeedback
-  _visualRoot: {fileID: 2673781218671860710}
-  _attack2: {fileID: 915071010000000003}
-  _startAmplitude: 0.01
-  _endAmplitude: 0.055
-  _frequency: 35
 --- !u!1 &6344326040289947755
 GameObject:
   m_ObjectHideFlags: 0
@@ -2032,6 +1901,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1475417064033065219}
   - component: {fileID: 983387666303537118}
+  - component: {fileID: 254911173883278708}
   m_Layer: 0
   m_Name: Feedback
   m_TagString: Untagged
@@ -2067,10 +1937,189 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterFeedback
   _lifeSystem: {fileID: 7773380453363272729}
+  _knockbackSystem: {fileID: 2799241729697342295}
   _onDamageFeedback:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6879885914348822913}
+        m_TargetAssemblyTypeName: MaterialFlash, Assembly-CSharp
+        m_MethodName: Flash
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onKnockbackFeedback:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 92747941858006504}
+        m_TargetAssemblyTypeName: MaterialFlash, Assembly-CSharp
+        m_MethodName: Flash
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &254911173883278708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8011356800719531349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6ab69812c818304c9b2d913e5bc132c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Feedback_NEC
+  _brain: {fileID: 8577765934520820637}
+  _animator: {fileID: 5030014084308271335}
+  _attack2: {fileID: 915071010000000003}
+  _attackSystem2: {fileID: 1789437288244258581}
+  _onAttack1Started:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 254911173883278708}
+        m_TargetAssemblyTypeName: Feedback_NEC, Assembly-CSharp
+        m_MethodName: StartAttack1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onAttack1Stoped:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 254911173883278708}
+        m_TargetAssemblyTypeName: Feedback_NEC, Assembly-CSharp
+        m_MethodName: StopAttack1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onAttack2Started:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 254911173883278708}
+        m_TargetAssemblyTypeName: Feedback_NEC, Assembly-CSharp
+        m_MethodName: StartAttack2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onAttack2Stoped:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 254911173883278708}
+        m_TargetAssemblyTypeName: Feedback_NEC, Assembly-CSharp
+        m_MethodName: StopAttack2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onAttack2HitboxActivated:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1422797764061930792}
+        m_TargetAssemblyTypeName: ParticleFeedback, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7742647889965733467}
+        m_TargetAssemblyTypeName: CameraShakeFeedback, Assembly-CSharp
+        m_MethodName: Shake
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onAttack2HitboxDesactivated:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1422797764061930792}
+        m_TargetAssemblyTypeName: ParticleFeedback, Assembly-CSharp
+        m_MethodName: Stop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onAttack2ChargeStarted:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7742647889965733467}
+        m_TargetAssemblyTypeName: CameraShakeFeedback, Assembly-CSharp
+        m_MethodName: StartCharge
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onAttack2ChargeStoped:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7742647889965733467}
+        m_TargetAssemblyTypeName: CameraShakeFeedback, Assembly-CSharp
+        m_MethodName: StopCharge
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onAttack2FullyCharged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 92747941858006504}
         m_TargetAssemblyTypeName: MaterialFlash, Assembly-CSharp
         m_MethodName: Flash
         m_Mode: 1
@@ -2356,11 +2405,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 18cdea95b7cc3bd4dacacd39e260f67e, type: 3}
   m_PrefabInstance: {fileID: 1487496850686131574}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1758039175445446695 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 18cdea95b7cc3bd4dacacd39e260f67e, type: 3}
-  m_PrefabInstance: {fileID: 1487496850686131574}
-  m_PrefabAsset: {fileID: 0}
 --- !u!137 &2380691333350360219 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 3867831932198566381, guid: 18cdea95b7cc3bd4dacacd39e260f67e, type: 3}
@@ -2392,6 +2436,14 @@ PrefabInstance:
     - target: {fileID: 4426539109986324952, guid: 676fef6fbc6dad346875da6f66dfb481, type: 3}
       propertyPath: playOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426539109986324952, guid: 676fef6fbc6dad346875da6f66dfb481, type: 3}
+      propertyPath: SizeBySpeedModule.y.minMaxState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426539109986324952, guid: 676fef6fbc6dad346875da6f66dfb481, type: 3}
+      propertyPath: SizeBySpeedModule.z.minMaxState
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4426539109986324957, guid: 676fef6fbc6dad346875da6f66dfb481, type: 3}
       propertyPath: m_Name
@@ -2439,10 +2491,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4426539109986324958, guid: 676fef6fbc6dad346875da6f66dfb481, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4916504070411894452, guid: 676fef6fbc6dad346875da6f66dfb481, type: 3}
-      propertyPath: clearBehavior
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7196932963408296294, guid: 676fef6fbc6dad346875da6f66dfb481, type: 3}

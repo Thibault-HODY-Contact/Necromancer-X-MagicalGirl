@@ -424,6 +424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterFeedback
   _lifeSystem: {fileID: 524379430910036903}
+  _knockbackSystem: {fileID: 2153933783279520994}
   _onDamageFeedback:
     m_PersistentCalls:
       m_Calls:
@@ -439,6 +440,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _onKnockbackFeedback:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1791047660870300315
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,6 +716,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3979681280075402906}
+  - {fileID: 8626065728722769506}
   m_Father: {fileID: 7746356120522548593}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3377487103952669760
@@ -976,7 +981,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MaterialFlash
   _visualRoot: {fileID: 6642060131148702437}
-  _lifeSystem: {fileID: 524379430910036903}
   _flashMaterial: {fileID: 2100000, guid: a576aee5a09fa8f43ae3635dc493d7c7, type: 2}
   _flashDuration: 0.1
   _flashTimer: 0
@@ -1758,6 +1762,51 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.53514963, y: 1.1077604, z: -0.00000064074993}
     m_Extent: {x: 0.45408863, y: 0.12321153, z: 0.13387114}
   m_DirtyAABB: 0
+--- !u!1 &9136037368461572522
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8626065728722769506}
+  - component: {fileID: 2153933783279520994}
+  m_Layer: 0
+  m_Name: KnockbackSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8626065728722769506
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9136037368461572522}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 532801488480218762}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2153933783279520994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9136037368461572522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d081ca33579e004bac705b2ab9a48d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KnockbackSystem
+  _rb: {fileID: 4838492910097751022}
 --- !u!1 &9181672314696029716
 GameObject:
   m_ObjectHideFlags: 0

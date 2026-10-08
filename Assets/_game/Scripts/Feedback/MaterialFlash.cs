@@ -6,8 +6,6 @@ public class MaterialFlash : MonoBehaviour
     [SerializeField] GameObject _visualRoot;
 
     [SerializeField] Material _flashMaterial;
-    [SerializeField] Material _whiteFlashMaterial;
-    [SerializeField, Min(0f)] float _whiteFlashDuration = 0.1f;
 
     [SerializeField, Min(0f)] float _flashDuration;
     [SerializeField, ReadOnly] float _flashTimer;
@@ -49,11 +47,6 @@ public class MaterialFlash : MonoBehaviour
     public void Flash()
     {
         Flash(_flashMaterial, _flashDuration);
-    }
-
-    public void FlashWhite()
-    {
-        Flash(_whiteFlashMaterial, _whiteFlashDuration);
     }
 
     void Flash(Material material, float duration)

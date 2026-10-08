@@ -195,6 +195,7 @@ public class AttackSystem : MonoBehaviour
 
         HitboxSettings settings = _hitboxes.Find(candidate => candidate.hitbox.Collider == source);
         if (settings == null) return;
+        if (!settings.hitbox.TryRegisterHit(target)) return;
 
         Debug.Log($"{target.name} est touché par {source.name}");
         OnHit?.Invoke();
@@ -262,7 +263,6 @@ public class AttackSystem : MonoBehaviour
 
         if (!ignoreDelay) return;
 
-        // Une attaque immédiate active aussi la physique et ses feedbacks dans cet appel.
         foreach (HitboxSettings settings in _hitboxes)
         {
             settings.isActivated = true;

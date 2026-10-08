@@ -106,6 +106,7 @@ MonoBehaviour:
   - Enemy
   _knockbackableTags:
   - Enemy
+  - NEC
 --- !u!1 &783532215869846549
 GameObject:
   m_ObjectHideFlags: 0

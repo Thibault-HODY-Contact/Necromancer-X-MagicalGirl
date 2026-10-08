@@ -14,11 +14,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1034700375001605414, guid: f6fd568b816c64943a44efc3add3a881, type: 3}
       propertyPath: m_Color.g
-      value: 0.5
+      value: 0.31132078
       objectReference: {fileID: 0}
     - target: {fileID: 1034700375001605414, guid: f6fd568b816c64943a44efc3add3a881, type: 3}
       propertyPath: m_Color.r
-      value: 0.07200056
+      value: 0.09247726
       objectReference: {fileID: 0}
     - target: {fileID: 1034700375001605414, guid: f6fd568b816c64943a44efc3add3a881, type: 3}
       propertyPath: m_Intensity
@@ -50,6 +50,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1464211568921416440, guid: f6fd568b816c64943a44efc3add3a881, type: 3}
       propertyPath: ColorModule.gradient.maxGradient.m_ColorSpace
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2990870103442498292, guid: f6fd568b816c64943a44efc3add3a881, type: 3}
+      propertyPath: clearBehavior
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2990870103442498292, guid: f6fd568b816c64943a44efc3add3a881, type: 3}
+      propertyPath: animatedLights.Array.data[0].colorGradient.key0.b
+      value: 0.58775365
+      objectReference: {fileID: 0}
+    - target: {fileID: 2990870103442498292, guid: f6fd568b816c64943a44efc3add3a881, type: 3}
+      propertyPath: animatedLights.Array.data[0].colorGradient.key0.g
+      value: 0.9811321
+      objectReference: {fileID: 0}
+    - target: {fileID: 2990870103442498292, guid: f6fd568b816c64943a44efc3add3a881, type: 3}
+      propertyPath: animatedLights.Array.data[0].colorGradient.key0.r
+      value: 0.59371394
+      objectReference: {fileID: 0}
+    - target: {fileID: 2990870103442498292, guid: f6fd568b816c64943a44efc3add3a881, type: 3}
+      propertyPath: animatedLights.Array.data[0].colorGradient.key1.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2990870103442498292, guid: f6fd568b816c64943a44efc3add3a881, type: 3}
+      propertyPath: animatedLights.Array.data[0].colorGradient.key1.g
+      value: 0.31132078
+      objectReference: {fileID: 0}
+    - target: {fileID: 2990870103442498292, guid: f6fd568b816c64943a44efc3add3a881, type: 3}
+      propertyPath: animatedLights.Array.data[0].colorGradient.key1.r
+      value: 0.09247725
+      objectReference: {fileID: 0}
+    - target: {fileID: 2990870103442498292, guid: f6fd568b816c64943a44efc3add3a881, type: 3}
+      propertyPath: animatedLights.Array.data[0].colorGradient.m_ColorSpace
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4382795560878698138, guid: f6fd568b816c64943a44efc3add3a881, type: 3}
@@ -91,6 +123,18 @@ PrefabInstance:
     - target: {fileID: 5824670795371433373, guid: f6fd568b816c64943a44efc3add3a881, type: 3}
       propertyPath: m_Name
       value: Attack2_NEC Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 5824670795371433374, guid: f6fd568b816c64943a44efc3add3a881, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5824670795371433374, guid: f6fd568b816c64943a44efc3add3a881, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5824670795371433374, guid: f6fd568b816c64943a44efc3add3a881, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 5824670795371433374, guid: f6fd568b816c64943a44efc3add3a881, type: 3}
       propertyPath: m_LocalPosition.x

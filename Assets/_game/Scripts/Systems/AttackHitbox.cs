@@ -16,7 +16,6 @@ public class AttackHitbox : MonoBehaviour
     {
         get
         {
-            // Also works when the hitbox GameObject has not run Awake yet.
             if (_collider == null)
             {
                 _collider = GetComponent<Collider>();
@@ -35,7 +34,6 @@ public class AttackHitbox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        _contacts.Add(other);
         DetectContact(other);
     }
 
@@ -49,9 +47,17 @@ public class AttackHitbox : MonoBehaviour
         if (!isActiveAndEnabled || !Collider.enabled) return;
         Transform root = other.transform.root;
         if (IgnoredRoot != null && root == IgnoredRoot.root) return;
-        if (_hitOnceUntilExit && !_hitTargets.Add(root)) return;
 
         ContactDetected?.Invoke(Collider, other);
+    }
+
+    public bool TryRegisterHit(Collider target)
+    {
+        if (!_hitOnceUntilExit) return true;
+
+        // L'AttackSystem appelle cette méthode seulement après avoir accepté la cible.
+        _contacts.Add(target);
+        return _hitTargets.Add(target.transform.root);
     }
 
     private void OnTriggerExit(Collider other)
