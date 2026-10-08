@@ -378,53 +378,6 @@ MonoBehaviour:
   _reappearDelay: 0.5
   _growDuration: 0.3
   _startScale: 0.05
---- !u!1 &2129729516231941704
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2219036062778911487}
-  - component: {fileID: 6823760786188874264}
-  m_Layer: 0
-  m_Name: Respawn
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2219036062778911487
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2129729516231941704}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5903182923767179866}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6823760786188874264
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2129729516231941704}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7caf0b11c87442448e4813d0e004be4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  _lifeSystem: {fileID: 4734700444178933388}
-  _rigidbody: {fileID: 6769671739622997187}
-  _camera: {fileID: 4989164387836943486}
 --- !u!1 &2349204002147550335
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,6 +411,7 @@ Transform:
   - {fileID: 7981486636443151414}
   - {fileID: 8469934477241360710}
   - {fileID: 2886432054011502489}
+  - {fileID: 7753612754233686928}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &6769671739622997187
@@ -897,6 +851,7 @@ GameObject:
   - component: {fileID: 5141158314878790198}
   - component: {fileID: 4522835725523895895}
   - component: {fileID: 8228095200028951614}
+  - component: {fileID: 4824189418744305694}
   m_Layer: 0
   m_Name: Feedback
   m_TagString: Untagged
@@ -1097,6 +1052,34 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4824189418744305694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3323217444248378598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31857d8226aa172479ef603de5562c19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDeathFeedback
+  _lifeSystem: {fileID: 4734700444178933388}
+  _playerInput: {fileID: 3964824340609264983}
+  _flashes:
+  - {fileID: 6096081566794509625}
+  - {fileID: 6997953537023137986}
+  _blinkDuration: 1.2
+  _blinkInterval: 0.15
+  _explosionVfx: {fileID: 1259440405115824722, guid: 0b6b51d8204d1014dadd5801074c1de8, type: 3}
+  _explosionPoint: {fileID: 7753612754233686928}
+  _explosionLifetime: 3
+  _visualRoot: {fileID: 7945038707951863081}
+  _endMessage: "Le Necromancien a gagn\xE9 !"
+  _endScreenDelay: 1
+  _onDeathFeedback:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3550894781442291254
 GameObject:
   m_ObjectHideFlags: 0
@@ -1152,6 +1135,37 @@ CapsuleCollider:
   m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: 0.19769776, z: -0.070349574}
+--- !u!1 &3788700365807165634
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7753612754233686928}
+  m_Layer: 0
+  m_Name: Point Explosion
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7753612754233686928
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3788700365807165634}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.014, y: 0.42956, z: -0.44}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8311687124821294349}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3912967385646456897
 GameObject:
   m_ObjectHideFlags: 0
@@ -1188,7 +1202,6 @@ Transform:
   - {fileID: 1533985983962405786}
   - {fileID: 6285074968814179339}
   - {fileID: 4929704391994236191}
-  - {fileID: 2219036062778911487}
   m_Father: {fileID: 8469934477241360710}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4217562706054382043
