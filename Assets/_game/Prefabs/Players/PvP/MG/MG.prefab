@@ -1638,7 +1638,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa1a9ceae7bdecc48981800542e1b9e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCommander
-  _allyStateGraph: {fileID: 11400000, guid: 5f663124dd10a7045883e7ef94987dad, type: 2}
+  _allyStateGraph: {fileID: 11400000, guid: 91d0a2bbc76a2b24a83a96cb5189d293, type: 2}
 --- !u!1 &6608751707588032754
 GameObject:
   m_ObjectHideFlags: 0
