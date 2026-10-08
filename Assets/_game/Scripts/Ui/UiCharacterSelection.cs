@@ -27,10 +27,21 @@ public class UiCharacterSelection : MonoBehaviour
 
     List<int> _CharacterChoose = new List<int> { 0, 0 }; // -1 = necromancer, 1 = MagicalGirl
 
+    SelectionMovement[] _selectionMovement;
+
     int[] _lastDirection = new int[2];
+    public int GetCharacterChoice(int playerId)
+    {
+        return _CharacterChoose[playerId];
+    }
     private void onLeftButton(int _playerId)
     {
         if (_CharacterChoose[_playerId] == -1) return;
+        if (_CharacterChoose[_playerId] == 1)
+        {
+            _CharacterChoose[_playerId] = 0;
+            return;
+        }
 
         for (int i = 0; i < _CharacterChoose.Count; i++)
         {
@@ -46,6 +57,11 @@ public class UiCharacterSelection : MonoBehaviour
     private void onRightButton(int _playerId)
     {
         if (_CharacterChoose[_playerId] == 1) return;
+        if (_CharacterChoose[_playerId] == -1)
+        {
+            _CharacterChoose[_playerId] = 0;
+            return;
+        }
 
         for (int i = 0; i < _CharacterChoose.Count; i++)
         {
@@ -159,6 +175,10 @@ public class UiCharacterSelection : MonoBehaviour
     }
     void Start()
     {
+        _selectionMovement = new SelectionMovement[_rootList.Length];
+        for (int i = 0; i < _rootList.Length; i++)
+            _selectionMovement[i] = _rootList[i].GetComponent<SelectionMovement>();
+
         for (int i = 0; i < _uiModules.Length; i++)
         {
             // Chaque joueur a sa propre copie des actions UI pour pas écraser les bindings de l'autre joueur
@@ -200,6 +220,12 @@ public class UiCharacterSelection : MonoBehaviour
 
         for (int i = 0; i < _CharacterChoose.Count; i++)
         {
+            if (_selectionMovement[i] != null)
+            {
+                _selectionMovement[i].MoveTo(_CharacterChoose[i]);
+                continue;
+            }
+
             if (_CharacterChoose[i] == 1)
             {
                 _rootList[i].transform.position = new Vector3(transform.position.x + 500, _rootList[i].transform.position.y, 0);

@@ -4,9 +4,11 @@ public class Attack1_NEC : MonoBehaviour
 {
     [SerializeField] ShootSystem _shootSystem;
     [SerializeField] Renderer[] _headRenderers;
+    [SerializeField] Light[] _headLights = new Light[0];
 
     Brain_Proj1_NEC _projectile;
     bool[] _wasHeadEnabled;
+    bool[] _wasHeadLightEnabled;
 
     public bool IsAttacking => _projectile != null || _shootSystem.HasPendingShoot;
     public bool CanAttack => isActiveAndEnabled && !IsAttacking
@@ -15,6 +17,7 @@ public class Attack1_NEC : MonoBehaviour
     void Awake()
     {
         _wasHeadEnabled = new bool[_headRenderers.Length];
+        _wasHeadLightEnabled = new bool[_headLights.Length];
     }
 
     void OnEnable()
@@ -48,6 +51,13 @@ public class Attack1_NEC : MonoBehaviour
             _wasHeadEnabled[i] = _headRenderers[i].enabled;
             _headRenderers[i].enabled = false;
         }
+
+        for (int i = 0; i < _headLights.Length; i++)
+        {
+            if (_headLights[i] == null) continue;
+            _wasHeadLightEnabled[i] = _headLights[i].enabled;
+            _headLights[i].enabled = false;
+        }
     }
 
     void EndAttack()
@@ -58,6 +68,11 @@ public class Attack1_NEC : MonoBehaviour
         for (int i = 0; i < _headRenderers.Length; i++)
         {
             if (_headRenderers[i] != null) _headRenderers[i].enabled = _wasHeadEnabled[i];
+        }
+
+        for (int i = 0; i < _headLights.Length; i++)
+        {
+            if (_headLights[i] != null) _headLights[i].enabled = _wasHeadLightEnabled[i];
         }
     }
 
