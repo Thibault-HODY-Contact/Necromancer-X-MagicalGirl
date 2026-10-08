@@ -75,7 +75,6 @@ public class Feedback_NEC : MonoBehaviour
 
         _animator.SetBool("isAttacking1", _isAttacking1);
         _animator.SetBool("isAttacking2", _isAttacking2);
-        // Conserver la pose de charge jusqu'à l'arrivée, puis lancer l'animation d'attaque.
         _animator.SetBool("isCharging2", _isAttacking2 && _attack2 != null
             && (_attack2.IsCharging || _attack2.IsTeleporting));
     }

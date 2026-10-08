@@ -487,6 +487,54 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!1 &2552105271561597553
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2652337949994307083}
+  - component: {fileID: 6997953537023137986}
+  m_Layer: 0
+  m_Name: WhiteFlash
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2652337949994307083
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2552105271561597553}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2673781218671860710}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6997953537023137986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2552105271561597553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d22a2ae15d93d442b2aefaf761b91e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaterialFlash
+  _visualRoot: {fileID: 6096743681105966137}
+  _flashMaterial: {fileID: 2100000, guid: 0c54d95fc39edee44bff3cecb5c4e757, type: 2}
+  _flashDuration: 0.5
+  _flashTimer: 0
 --- !u!1 &2628666553770583161
 GameObject:
   m_ObjectHideFlags: 0
@@ -1018,10 +1066,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageFeedBack
   _lifeSystem: {fileID: 4734700444178933388}
+  _knockbackSystem: {fileID: 1459655601860567495}
   _onDamageFeedback:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6096081566794509625}
+        m_TargetAssemblyTypeName: MaterialFlash, Assembly-CSharp
+        m_MethodName: Flash
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onKnockbackFeedback:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6997953537023137986}
         m_TargetAssemblyTypeName: MaterialFlash, Assembly-CSharp
         m_MethodName: Flash
         m_Mode: 1
@@ -1059,7 +1123,7 @@ Transform:
   m_GameObject: {fileID: 3550894781442291254}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 1.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1084,8 +1148,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5703496
-  m_Height: 2.3953955
+  m_Radius: 0.5
+  m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: 0.19769776, z: -0.070349574}
 --- !u!1 &3912967385646456897
@@ -1187,7 +1251,7 @@ GameObject:
   - component: {fileID: 6833542368655477365}
   - component: {fileID: 6096081566794509625}
   m_Layer: 0
-  m_Name: HitFlash
+  m_Name: RedFlash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1406,6 +1470,7 @@ Transform:
   - {fileID: 915077010000000002}
   - {fileID: 915077010000000005}
   - {fileID: 6833542368655477365}
+  - {fileID: 2652337949994307083}
   m_Father: {fileID: 8469934477241360710}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6201309483406989252

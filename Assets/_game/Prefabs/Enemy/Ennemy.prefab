@@ -306,6 +306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterFeedback
   _lifeSystem: {fileID: 7288582790927405248}
+  _knockbackSystem: {fileID: 1862352822466988839}
   _onDamageFeedback:
     m_PersistentCalls:
       m_Calls:
@@ -321,6 +322,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _onKnockbackFeedback:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &384935996797858005
 MonoBehaviour:
   m_ObjectHideFlags: 0
