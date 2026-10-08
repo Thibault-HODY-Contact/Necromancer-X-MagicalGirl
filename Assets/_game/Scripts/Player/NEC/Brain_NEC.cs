@@ -38,6 +38,7 @@ public class Brain_NEC : MonoBehaviour
     void Start()
     {
         _playerInput = GetComponent<PlayerInput>();
+        _playerInput.actions.Disable();                
         _playerInput.SwitchCurrentActionMap("Player");
 
         _moveAction = _playerInput.actions.FindAction(_movementInput.action.id);

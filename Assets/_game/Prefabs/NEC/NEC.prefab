@@ -1422,7 +1422,7 @@ MonoBehaviour:
   _CommandModeEnterRef: {fileID: 2923941096162542318, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _CommandModeConfirmRef: {fileID: 6274111711075330422, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _CommandModeExitRef: {fileID: 8797756322174926497, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  _CommandModePointRef: {fileID: -1654692200621890270, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  _CommandModePointRef: {fileID: 6912617010060491819, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _CommandModeStickRef: {fileID: 5777551380816992553, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _stickSpeed: 0.8
   _magnetRadius: 0.1

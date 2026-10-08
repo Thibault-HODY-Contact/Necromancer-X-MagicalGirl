@@ -138,22 +138,18 @@ public class CommandMode : MonoBehaviour
                 meilleur = candidat;
             }
         }
-        if(meilleur != _selected)
-        {
-            _selected = meilleur;
-            Debug.Log(_selected?.name ?? "null");
-            _cursorUI.position = _camera.ViewportToScreenPoint(meilleur.transform.position);
-
-        }
+        _selected = meilleur;
 
         if (_selected != null)
         {
+            // Le curseur s'aimante sur l'objet sélectionné
+            _cursorUI.position = _camera.WorldToScreenPoint(_selected.transform.position);
             _markerUI.position = _camera.WorldToScreenPoint(_selected.transform.position + Vector3.up * _markerHeight);
             _markerUI.gameObject.SetActive(true);
-        } else
+        }
+        else
         {
             _cursorUI.position = _camera.ViewportToScreenPoint(_cursor);
-
             _markerUI.gameObject.SetActive(false);
         }
 
