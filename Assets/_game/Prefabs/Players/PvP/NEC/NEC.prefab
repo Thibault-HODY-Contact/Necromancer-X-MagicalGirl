@@ -272,6 +272,37 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
+--- !u!1 &721209063709674911
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 333549665668617934}
+  m_Layer: 0
+  m_Name: ExplosionPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &333549665668617934
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 721209063709674911}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.253, y: 0.42956, z: -0.076}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8311687124821294349}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &767063514185308103
 GameObject:
   m_ObjectHideFlags: 0
@@ -891,6 +922,7 @@ Transform:
   - {fileID: 7981486636443151414}
   - {fileID: 8469934477241360710}
   - {fileID: 306522888934592985}
+  - {fileID: 333549665668617934}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &6769671739622997187
@@ -1175,7 +1207,6 @@ Transform:
   - {fileID: 5437576157219821506}
   - {fileID: 3397209486192901136}
   - {fileID: 6120621091384116917}
-  - {fileID: 5631403743723068073}
   m_Father: {fileID: 8469934477241360710}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4553486556771986758
@@ -2069,53 +2100,6 @@ MonoBehaviour:
   _brain: {fileID: 8998577825521724162}
   _cinemachineCamera: {fileID: 4989164387836943486}
   _playerInput: {fileID: 3964824340609264983}
---- !u!1 &6666349397821843248
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5631403743723068073}
-  - component: {fileID: 1342795860319306299}
-  m_Layer: 0
-  m_Name: Respawn
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5631403743723068073
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6666349397821843248}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.248749, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5903182923767179866}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1342795860319306299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6666349397821843248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7caf0b11c87442448e4813d0e004be4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  _lifeSystem: {fileID: 7773380453363272729}
-  _rigidbody: {fileID: 6769671739622997187}
-  _camera: {fileID: 4989164387836943486}
 --- !u!1 &7052966085161519367
 GameObject:
   m_ObjectHideFlags: 0
@@ -2208,6 +2192,7 @@ GameObject:
   - component: {fileID: 1475417064033065219}
   - component: {fileID: 983387666303537118}
   - component: {fileID: 254911173883278708}
+  - component: {fileID: 4570588102017802210}
   m_Layer: 0
   m_Name: Feedback
   m_TagString: Untagged
@@ -2437,6 +2422,34 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4570588102017802210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8011356800719531349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31857d8226aa172479ef603de5562c19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDeathFeedback
+  _lifeSystem: {fileID: 7773380453363272729}
+  _playerInput: {fileID: 3964824340609264983}
+  _flashes:
+  - {fileID: 6879885914348822913}
+  - {fileID: 92747941858006504}
+  _blinkDuration: 1.2
+  _blinkInterval: 0.15
+  _explosionVfx: {fileID: 6570219114777829139, guid: 948339ce10e64334daae8bf423a6805e, type: 3}
+  _explosionPoint: {fileID: 333549665668617934}
+  _explosionLifetime: 3
+  _visualRoot: {fileID: 1758039175445446695}
+  _endMessage: "La Magical Girl a gagn\xE9 !"
+  _endScreenDelay: 1
+  _onDeathFeedback:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8084189206957772563
 GameObject:
   m_ObjectHideFlags: 0
@@ -2715,6 +2728,11 @@ PrefabInstance:
 --- !u!4 &1382077304235481757 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 18cdea95b7cc3bd4dacacd39e260f67e, type: 3}
+  m_PrefabInstance: {fileID: 1487496850686131574}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1758039175445446695 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 18cdea95b7cc3bd4dacacd39e260f67e, type: 3}
   m_PrefabInstance: {fileID: 1487496850686131574}
   m_PrefabAsset: {fileID: 0}
 --- !u!137 &2380691333350360219 stripped
