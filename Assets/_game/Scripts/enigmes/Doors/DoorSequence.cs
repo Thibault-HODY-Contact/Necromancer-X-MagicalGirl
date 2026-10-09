@@ -12,6 +12,10 @@ public class DoorSequence : MonoBehaviour
 {
     const int MainPlayerIndex = 0;
 
+    enum Audience { AllPlayers, Necromancer, MagicalGirl }
+
+    [SerializeField] Audience _audience;
+
     [SerializeField] List<DoorCondition> _conditions = new List<DoorCondition>();
 
     [SerializeField] PlayableDirector _director;
@@ -24,10 +28,16 @@ public class DoorSequence : MonoBehaviour
     [SerializeField] UnityEvent _onFinished = new UnityEvent();
 
     bool _hasStarted;
+    PlayerInput _individualPlayer;
+    OutputChannels _savedChannel;
+    bool _individualSequence;
+    bool _inputWasActive;
+    bool _cameraWasActive;
 
     void Awake()
     {
-        if (_director == null || _doorCamera == null || _fader == null)
+        if (_director == null || _doorCamera == null
+            || (_audience == Audience.AllPlayers && _fader == null))
         {
             enabled = false;
         }
@@ -37,8 +47,33 @@ public class DoorSequence : MonoBehaviour
     {
         if (_hasStarted || !AreConditionsMet()) return;
 
+        PlayerInput player = null;
+        if (_audience != Audience.AllPlayers)
+        {
+            player = GetIndividualPlayer();
+            if (player == null || player.gameObject.scene != gameObject.scene
+                || player.camera == null || !player.camera.TryGetComponent<CinemachineBrain>(out _)) return;
+        }
+
         _hasStarted = true;
-        StartCoroutine(PlaySequence());
+        StartCoroutine(PlaySequence(player));
+    }
+
+    void OnDisable()
+    {
+        if (!_individualSequence) return;
+
+        StopAllCoroutines();
+        RestoreIndividualState();
+    }
+
+    PlayerInput GetIndividualPlayer()
+    {
+        GameManager manager = GameManager.Instance;
+        if (manager == null) return null;
+
+        return _audience == Audience.Necromancer
+            ? manager.necromancianInput : manager.magicalGirlInput;
     }
 
     bool AreConditionsMet()
@@ -52,18 +87,67 @@ public class DoorSequence : MonoBehaviour
         return true;
     }
 
-    IEnumerator PlaySequence()
+    IEnumerator PlaySequence(PlayerInput player)
     {
+        if (player != null)
+        {
+            yield return PlayIndividualSequence(player);
+            _onFinished.Invoke();
+            yield break;
+        }
+
         SetPlayersInputActive(false);
 
-        yield return BlendToDoorCamera();
+        // Switch the layout before the cinematic camera can reach either player view.
         yield return FadeTransition(() => SetSplitScreen(false));
+        yield return BlendToDoorCamera();
         yield return PlayCinematic();
-        yield return FadeTransition(() => SetSplitScreen(true));
         yield return BlendBackToPlayers();
+        yield return FadeTransition(() => SetSplitScreen(true));
 
         SetPlayersInputActive(true);
         _onFinished.Invoke();
+    }
+
+    IEnumerator PlayIndividualSequence(PlayerInput player)
+    {
+        CinemachineBrain brain = player.camera.GetComponent<CinemachineBrain>();
+        float blendDuration = brain.DefaultBlend.BlendTime;
+        _individualPlayer = player;
+        _savedChannel = _doorCamera.OutputChannel;
+        _inputWasActive = player.inputIsActive;
+        _cameraWasActive = _doorCamera.gameObject.activeSelf;
+        _individualSequence = true;
+
+        try
+        {
+            // Channels follow the player's index, which can change with character selection.
+            _doorCamera.OutputChannel = brain.ChannelMask;
+            if (_inputWasActive) player.DeactivateInput();
+            _doorCamera.gameObject.SetActive(true);
+            yield return new WaitForSeconds(blendDuration);
+            yield return PlayCinematic();
+            _doorCamera.gameObject.SetActive(false);
+            yield return new WaitForSeconds(blendDuration);
+        }
+        finally
+        {
+            RestoreIndividualState();
+        }
+    }
+
+    void RestoreIndividualState()
+    {
+        if (!_individualSequence) return;
+        _individualSequence = false;
+
+        if (_doorCamera != null)
+        {
+            _doorCamera.gameObject.SetActive(_cameraWasActive);
+            _doorCamera.OutputChannel = _savedChannel;
+        }
+        if (_individualPlayer != null && _inputWasActive) _individualPlayer.ActivateInput();
+        _individualPlayer = null;
     }
 
     IEnumerator BlendToDoorCamera()

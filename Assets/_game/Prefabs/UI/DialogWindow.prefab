@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7461051182121798172}
   - component: {fileID: 6758446995353686042}
   - component: {fileID: 4013372088668999782}
+  - component: {fileID: 1851036332479112011}
   m_Layer: 5
   m_Name: Textbar
   m_TagString: Untagged
@@ -79,6 +80,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 1
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &1851036332479112011
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 273019670723693643}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &346475491659451974
 GameObject:
   m_ObjectHideFlags: 0
@@ -778,6 +791,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogFeedback
   _dialogRunner: {fileID: 4743093490325440713}
+  _dialogGroup: {fileID: 1851036332479112011}
   _panel: {fileID: 4013372088668999782}
   _nameplate: {fileID: 3739240541322807296}
   _portraitFrame: {fileID: 7222307181559670145}

@@ -34,7 +34,7 @@ public class UiCharacterSelection : MonoBehaviour
     {
         return _CharacterChoose[playerId];
     }
-    private void onLeftButton(int _playerId)
+    public void onLeftButton(int _playerId)
     {
         if (_CharacterChoose[_playerId] == -1) return;
         if (_CharacterChoose[_playerId] == 1)
@@ -54,7 +54,7 @@ public class UiCharacterSelection : MonoBehaviour
         _CharacterChoose[_playerId] = -1;
     }
 
-    private void onRightButton(int _playerId)
+    public void onRightButton(int _playerId)
     {
         if (_CharacterChoose[_playerId] == 1) return;
         if (_CharacterChoose[_playerId] == -1)

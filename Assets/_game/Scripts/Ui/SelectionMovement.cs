@@ -3,6 +3,8 @@ using UnityEngine;
 public class SelectionMovement : MonoBehaviour
 {
     [SerializeField] RectTransform _rectTransform;
+    [SerializeField] GameObject _leftArrow;
+    [SerializeField] GameObject _rightArrow;
     [SerializeField] float _leftPosition = -500f;
     [SerializeField] float _middlePosition;
     [SerializeField] float _rightPosition = 500f;
@@ -23,6 +25,9 @@ public class SelectionMovement : MonoBehaviour
     {
         if (_rectTransform == null || position == _targetPosition) return;
         _targetPosition = position;
+
+        if (_leftArrow != null) _leftArrow.SetActive(position > -1);
+        if (_rightArrow != null) _rightArrow.SetActive(position < 1);
 
         float destination = position < 0 ? _leftPosition : position > 0 ? _rightPosition : _middlePosition;
         StartMove(destination);

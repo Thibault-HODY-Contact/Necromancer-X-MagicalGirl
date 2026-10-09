@@ -4,6 +4,7 @@ using UnityEngine;
 public class DialogFeedback : MonoBehaviour
 {
     [SerializeField] DialogRunner _dialogRunner;
+    [SerializeField] CanvasGroup _dialogGroup;
     [SerializeField] UnityEngine.UI.Image _panel;
     [SerializeField] UnityEngine.UI.Image _nameplate;
     [SerializeField] UnityEngine.UI.Image _portraitFrame;
@@ -27,6 +28,13 @@ public class DialogFeedback : MonoBehaviour
 
     void OnEnable()
     {
+        if (_dialogGroup == null)
+        {
+            _dialogGroup = _panel.GetComponent<CanvasGroup>();
+            if (_dialogGroup == null) _dialogGroup = _panel.gameObject.AddComponent<CanvasGroup>();
+            _dialogGroup.alpha = 0f;
+        }
+
         _dialogRunner.DialogStarted += OnDialogStarted;
         _dialogRunner.LineReady += OnLineReady;
     }
@@ -39,6 +47,7 @@ public class DialogFeedback : MonoBehaviour
 
     void OnDialogStarted(DialogSessionInfo session)
     {
+        _dialogGroup.alpha = 0f;
         ApplyStyle(_defaultPanel, _defaultNameplate, _defaultFrame, null);
     }
 
@@ -58,6 +67,8 @@ public class DialogFeedback : MonoBehaviour
         {
             ApplyStyle(_defaultPanel, _defaultNameplate, _defaultFrame, null);
         }
+
+        _dialogGroup.alpha = 1f;
     }
 
     void ApplyStyle(Sprite panel, Sprite nameplate, Sprite frame, Sprite portrait)
