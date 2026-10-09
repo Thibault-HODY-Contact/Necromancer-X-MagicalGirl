@@ -7,8 +7,8 @@ public class AttackHitbox : MonoBehaviour
     [SerializeField] bool _hitOnceUntilExit;
 
     private Collider _collider;
-    readonly HashSet<Collider> _contacts = new HashSet<Collider>();
-    readonly HashSet<Transform> _hitTargets = new HashSet<Transform>();
+    [ReadOnly] HashSet<Collider> _contacts = new HashSet<Collider>();
+    [ReadOnly] HashSet<Transform> _hitTargets = new HashSet<Transform>();
 
     public Transform IgnoredRoot { get; set; }
 
@@ -55,7 +55,6 @@ public class AttackHitbox : MonoBehaviour
     {
         if (!_hitOnceUntilExit) return true;
 
-        // L'AttackSystem appelle cette méthode seulement après avoir accepté la cible.
         _contacts.Add(target);
         return _hitTargets.Add(target.transform.root);
     }

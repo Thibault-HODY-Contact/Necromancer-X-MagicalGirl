@@ -64,7 +64,6 @@ public class Feedback_MG : MonoBehaviour
         _isAttack1Prepared = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         _animator.SetBool("isAttacking1", _isAttacking1);
@@ -99,7 +98,6 @@ public class Feedback_MG : MonoBehaviour
 
     void OnAttack1Shoot()
     {
-        // Un tir immédiat arrive avant StartAttack1, un tir différé arrive après.
         bool isAttackingRight = _isAttack1Prepared ? _isAttackingRight : !_isAttackingRight;
         _isAttack1Prepared = false;
 

@@ -9,10 +9,4 @@ public class NecromantianBase : MonoBehaviour
         GameManager.Instance.Necromancian = transform.root.gameObject;
         GameManager.Instance.necromancianInput = GetComponent<PlayerInput>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

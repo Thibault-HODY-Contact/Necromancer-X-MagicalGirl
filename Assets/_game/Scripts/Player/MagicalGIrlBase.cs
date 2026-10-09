@@ -8,10 +8,4 @@ public class MagicalGirlBase : MonoBehaviour
         GameManager.Instance.MagicalGirl = transform.root.gameObject;
         GameManager.Instance.magicalGirlInput = GetComponent<PlayerInput>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
