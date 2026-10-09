@@ -189,54 +189,78 @@ public class AttackSystem : MonoBehaviour
     private void HandleContact(Collider source, Collider target)
     {
         GameObject root = target.transform.root.gameObject;
+        GameObject sourceRoot = source.transform.root.gameObject;
+        Projectile projectile = sourceRoot.GetComponent<Projectile>();
+        GameObject attacker = projectile != null && projectile.Owner != null
+            ? projectile.Owner.root.gameObject : sourceRoot;
+        PNJAlly attackingAlly = attacker.GetComponentInChildren<PNJAlly>();
+        PNJAlly targetAlly = root.GetComponentInChildren<PNJAlly>();
+
+        if (attacker == root) return;
+        if (attackingAlly != null && attackingAlly.Owner != null
+            && attackingAlly.Owner.transform.root.gameObject == root) return;
+
         bool canDamage = _damageableTags.Contains(target.tag);
         bool canKnockback = _knockbackableTags.Contains(target.tag);
+
+        if (attackingAlly != null && attackingAlly.Owner != null)
+        {
+            LifeSystem attackingLife = attacker.GetComponentInChildren<LifeSystem>();
+            if (attackingLife != null && attackingLife.IsDead) return;
+            canDamage = attackingAlly.CanAttackTarget(root);
+            canKnockback = canDamage;
+        }
+        else if (targetAlly != null && targetAlly.Owner != null)
+        {
+            PlayerCommander commander = attacker.GetComponentInChildren<PlayerCommander>();
+            if (commander != null)
+            {
+                if (targetAlly.Owner.transform.root.gameObject == attacker) return;
+                canDamage = commander.IsDuel;
+                canKnockback = true;
+            }
+        }
+
         if (!canDamage && !canKnockback) return;
 
         HitboxSettings settings = _hitboxes.Find(candidate => candidate.hitbox.Collider == source);
         if (settings == null) return;
         if (!settings.hitbox.TryRegisterHit(target)) return;
 
+        LifeSystem lifeSystem = root.GetComponentInChildren<LifeSystem>();
+        bool wasAlive = lifeSystem != null && !lifeSystem.IsDead;
+        GameObject killer = attackingAlly != null && attackingAlly.Owner != null
+            ? attackingAlly.Owner.transform.root.gameObject : attacker;
+
         Debug.Log($"{target.name} est touché par {source.name}");
         OnHit?.Invoke();
-        LifeSystem lifeSystem = root.GetComponentInChildren<LifeSystem>();
 
-        if (canDamage)
+        if (canDamage && lifeSystem != null)
         {
-            if (lifeSystem != null) lifeSystem.TakeDamage(settings.Damage);
-  
+            lifeSystem.TakeDamage(settings.Damage);
         }
 
         if (canKnockback)
         {
             KnockbackSystem knockbackSystem = root.GetComponentInChildren<KnockbackSystem>();
-            if (knockbackSystem == null) return;
-
-            if (settings.KnockbackType == KnockbackType.AttackerForward)
+            if (knockbackSystem != null && settings.KnockbackType == KnockbackType.AttackerForward)
             {
                 knockbackSystem.Knockback(settings.Knockback, source.transform.forward);
             }
-            else if (settings.KnockbackType == KnockbackType.AwayFromAttacker)
+            else if (knockbackSystem != null && settings.KnockbackType == KnockbackType.AwayFromAttacker)
             {
                 Vector3 knockbackDirection = root.transform.position - source.transform.root.position;
                 knockbackSystem.Knockback(settings.Knockback, new Vector3(knockbackDirection.x, 0, knockbackDirection.z).normalized);
             }
         }
 
-        if (lifeSystem.IsDead && root.GetComponentInChildren<ConvertSystem>())
+        if (canDamage && wasAlive && lifeSystem != null && lifeSystem.IsDead
+            && (targetAlly == null || targetAlly.Owner == null))
         {
             ConvertSystem _convertSystem = root.GetComponentInChildren<ConvertSystem>();
-
-            if (source.transform.root.gameObject.GetComponent<Projectile>())
+            if (_convertSystem != null)
             {
-                _convertSystem.onDeathConvert(source.transform.root.gameObject.GetComponent<Projectile>().Owner.gameObject);
-                Debug.Log("killer");
-            }
-            else
-            {
-                Debug.Log("killer");
-                _convertSystem.onDeathConvert(source.transform.root.gameObject);
-
+                _convertSystem.onDeathConvert(killer);
             }
         }
     }

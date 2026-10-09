@@ -382,9 +382,13 @@ MonoBehaviour:
   _damageableTags:
   - Enemy
   - MG
+  - AllyNEC
+  - AllyMG
   _knockbackableTags:
   - Enemy
   - MG
+  - AllyNEC
+  - AllyMG
 --- !u!1 &915074010000000021
 GameObject:
   m_ObjectHideFlags: 0

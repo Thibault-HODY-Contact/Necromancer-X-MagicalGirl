@@ -34,6 +34,11 @@ public class CommandMode : MonoBehaviour
     bool _active = false;
     Vector2 _cursor = Vector2.zero;
 
+    public void SetCamera(Camera camera)
+    {
+        _camera = camera;
+    }
+
     void Start()
     {
         _CommandModeEnter= _playerInput.actions.FindAction(_CommandModeEnterRef.action.id);
@@ -49,6 +54,11 @@ public class CommandMode : MonoBehaviour
     }
     private void OnDestroy()
     {
+        if (_active)
+        {
+            _active = false;
+            UpdateCameraEffects();
+        }
         if (_CommandModeEnter == null) return;
         if (_CommandModeConfirm == null) return;
         if (_CommandModeExit == null) return;
@@ -101,9 +111,7 @@ public class CommandMode : MonoBehaviour
             interact.SetHighlighted(true);
         }
 
-        _camera.GetUniversalAdditionalCameraData().volumeLayerMask |= 1 << LayerMask.NameToLayer("CommandGray");
-
-        _camera.GetUniversalAdditionalCameraData().SetRenderer(1);
+        UpdateCameraEffects();
     }
     void Update()
     {
@@ -169,9 +177,30 @@ public class CommandMode : MonoBehaviour
         }
         interactInterfaces.Clear();
 
-        _camera.GetUniversalAdditionalCameraData().volumeLayerMask &= ~(1 << LayerMask.NameToLayer("CommandGray"));
-        _camera.GetUniversalAdditionalCameraData().SetRenderer(-1);
+        UpdateCameraEffects();
 
 
+    }
+    void UpdateCameraEffects()
+    {
+        if (_camera == null) return;
+
+        bool active = _active;
+        foreach (PlayerInput player in PlayerInput.all)
+        {
+            CommandMode other = player.transform.root.GetComponentInChildren<CommandMode>();
+            if (other != null && other._camera == _camera && other._active)
+            {
+                active = true;
+                break;
+            }
+        }
+
+        // A shared camera stays in command mode until both players leave it.
+        UniversalAdditionalCameraData cameraData = _camera.GetUniversalAdditionalCameraData();
+        int commandLayer = 1 << LayerMask.NameToLayer("CommandGray");
+        if (active) cameraData.volumeLayerMask |= commandLayer;
+        else cameraData.volumeLayerMask &= ~commandLayer;
+        cameraData.SetRenderer(active ? 1 : -1);
     }
 }

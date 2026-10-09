@@ -11,7 +11,7 @@ public class UiCharacterSelection : MonoBehaviour
     [SerializeField] TMP_Text _DeviceJ2;
 
     [SerializeField] GameObject[] _rootList;
-    [SerializeField] InputSystemUIInputModule[] _uiModules; // Les différents EventSystem pour que chaque joueur control son ui de séléction
+    [SerializeField] InputSystemUIInputModule[] _uiModules;
 
 
     [SerializeField] ControllerDetector _detector;
@@ -94,14 +94,13 @@ public class UiCharacterSelection : MonoBehaviour
 
     }
 
-    // On verifie si le joueur peux se mettre en prêt 
     bool HasChosen(int playerId)
     {
         if (_playerDevices[playerId] == null)
-            return false; // Pas de périphérique
+            return false;
 
         if (_CharacterChoose[playerId] == 0)
-            return false; // Pas de personnage
+            return false;
 
         return true;
     }
@@ -112,19 +111,15 @@ public class UiCharacterSelection : MonoBehaviour
         if (_detector.Keyboard != null) available.Add(_detector.Keyboard);
         available.AddRange(_detector.ManettesList);
 
-        // On retire celui déjà pris par l'autre joueur
         int otherPlayerId = 1 - playerId;
         available.Remove(_playerDevices[otherPlayerId]);
 
         if (available.Count > 0)
         {
-            // Position du périphérique actuel dans la liste (-1 si le joueur n'en a pas)
             int currentIndex = available.IndexOf(_playerDevices[playerId]);
 
-            // On passe au suivant
             int nextIndex = currentIndex + 1;
 
-            // Si on dépasse la fin de la liste, on revient au premier
             if (nextIndex >= available.Count)
                 nextIndex = 0;
 
@@ -181,12 +176,11 @@ public class UiCharacterSelection : MonoBehaviour
 
         for (int i = 0; i < _uiModules.Length; i++)
         {
-            // Chaque joueur a sa propre copie des actions UI pour pas écraser les bindings de l'autre joueur
             _uiModules[i].actionsAsset = Instantiate(_uiModules[i].actionsAsset);
 
         }
-        AutoAssignDevices();                                // après la boucle
-        _detector.OnManettesChanged += AutoAssignDevices;   // en dernier
+        AutoAssignDevices();                               
+        _detector.OnManettesChanged += AutoAssignDevices;  
     }
     private void OnDestroy()
     {
@@ -197,7 +191,6 @@ public class UiCharacterSelection : MonoBehaviour
     {
         for (int i = 0; i < _playerDevices.Length; i++)
         {
-            // Si le périphérique du joueur a été débranché, il le perd
             if (_playerDevices[i] != null && !_playerDevices[i].added)
             {
                 _playerDevices[i] = null;
@@ -249,7 +242,6 @@ public class UiCharacterSelection : MonoBehaviour
 
         bool bothChose = HasChosen(0) && HasChosen(1);
 
-        // Si un joueur n'est pas prêt, le compte à rebours repart du début
         if (!bothChose)
         {
             _countdownTimer = _countdownDuration;
@@ -260,13 +252,12 @@ public class UiCharacterSelection : MonoBehaviour
         _countdownTimer -= Time.deltaTime;
         _countdownText.text = Mathf.CeilToInt(_countdownTimer).ToString();
 
-        // si après le timer les deux sont toujours prêts, on lance
         if (_countdownTimer <= 0f)
         {
             _gameStarted = true;
 
             ConnectPlayer.SetPlayers(_playerDevices, _CharacterChoose);
-            SceneManager.LoadScene(_gameSceneName);
+            SceneLoadingScreen.LoadScene(_gameSceneName);
         }
     }
 

@@ -51,6 +51,6 @@ public class EndScreen : MonoBehaviour
 
         if (GameManager.Instance != null) GameManager.Instance.ClearSavedAllies();
 
-        SceneManager.LoadScene(_menuScene);
+        SceneLoadingScreen.LoadScene(_menuScene);
     }
 }

@@ -8,9 +8,17 @@ public class Brain_Proj2_MG : MonoBehaviour
     [SerializeField] AttackSystem _attackSystem;
 
     Transform _rootTransform;
+    ParticleTrailFeedback _trail;
+    bool _hasFinished;
 
     public event Action<float> Rotated;
     public event Action Finished;
+
+    void Awake()
+    {
+        _trail = _projectile.GetComponentInChildren<ParticleTrailFeedback>();
+        if (_trail != null) _trail.DeferEmission();
+    }
 
     void Start()
     {
@@ -25,6 +33,7 @@ public class Brain_Proj2_MG : MonoBehaviour
         _orbitSystem.Completed += OnCompleted;
 
         _orbitSystem.Orbit(_projectile.Owner);
+        if (_trail != null) _trail.BeginEmission();
 
         foreach (HitboxSettings settings in _attackSystem.Hitboxes)
         {
@@ -50,6 +59,7 @@ public class Brain_Proj2_MG : MonoBehaviour
 
     void OnCompleted()
     {
+        Finish();
         Destroy(_rootTransform.gameObject);
     }
 
@@ -61,6 +71,14 @@ public class Brain_Proj2_MG : MonoBehaviour
             _orbitSystem.Completed -= OnCompleted;
         }
 
+        Finish();
+    }
+
+    void Finish()
+    {
+        if (_hasFinished) return;
+
+        _hasFinished = true;
         Finished?.Invoke();
     }
 }

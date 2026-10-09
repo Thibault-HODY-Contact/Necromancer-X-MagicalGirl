@@ -53,6 +53,6 @@ public class LevelTransition : MonoBehaviour
             gameManager.SetNextPlayerPrefabs(_nextNecromancianPrefab, _nextMagicalGirlPrefab);
         }
 
-        SceneManager.LoadScene(_nextScene);
+        SceneLoadingScreen.LoadScene(_nextScene);
     }
 }

@@ -30,7 +30,21 @@ public class LifeSystem : MonoBehaviour
 
 
 
+    public int MaxHealth => _maxHealth;
     public bool IsDead => _health == 0;
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+    public bool DebugInvincible { get; set; }
+
+    public void DebugSetHealth(int health)
+    {
+        int newHealth = Mathf.Clamp(health, 0, _maxHealth);
+        if (newHealth == Health) return;
+        if (newHealth > Health) OnHeal?.Invoke(Health, newHealth);
+        else OnDamage?.Invoke(Health, newHealth);
+        Health = newHealth;
+    }
+#endif
 
     public Action<int, int> OnHeal;
     public Action<int, int> OnDamage;
@@ -59,6 +73,9 @@ public class LifeSystem : MonoBehaviour
 
     public void TakeDamage(int amount) {
         if (IsDead) return;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        if (DebugInvincible) return;
+#endif
 
         Debug.Log($"{gameObject.name} took {amount} damage.");
 

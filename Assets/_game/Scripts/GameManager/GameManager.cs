@@ -77,6 +77,14 @@ public class GameManager : MonoBehaviour
         NextMagicalGirlPrefab = null;
     }
 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+    public void DebugConfigureAllyPrefabs(GameObject necromancian, GameObject magicalGirl)
+    {
+        _necromancianAllyPrefab = necromancian;
+        _magicalGirlAllyPrefab = magicalGirl;
+    }
+#endif
+
     #endregion
 
     #region Sauvegarde des alliés

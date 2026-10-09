@@ -107,6 +107,8 @@ MonoBehaviour:
   _knockbackableTags:
   - Enemy
   - NEC
+  - AllyNEC
+  - AllyMG
 --- !u!1 &1779067999968824185
 GameObject:
   m_ObjectHideFlags: 0

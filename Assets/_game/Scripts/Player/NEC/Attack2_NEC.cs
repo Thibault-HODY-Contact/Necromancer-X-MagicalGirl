@@ -28,6 +28,7 @@ public class Attack2_NEC : MonoBehaviour
 
     public bool IsCharging => _isCharging;
     public bool IsTeleporting => _isTeleporting;
+    public float TeleportationDistance => _teleportationDistance;
     public float ChargeRatio => _chargeDuration > 0f ? Mathf.Clamp01(_chargeTimer / _chargeDuration) : 1f;
     public bool IsAttacking => _isAttacking;
     public bool CanAttack => isActiveAndEnabled && !IsAttacking && _attackSystem.CanAttack;

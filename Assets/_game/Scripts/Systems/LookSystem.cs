@@ -10,6 +10,11 @@ public class LookSystem : MonoBehaviour
     public Vector2 AimScreenPosition { get; set; }
     public bool UseMouseAim { get; set; }
 
+    public void SetCamera(Camera camera)
+    {
+        _camera = camera;
+    }
+
     void Reset()
     {
         _rootTransform = transform.root;

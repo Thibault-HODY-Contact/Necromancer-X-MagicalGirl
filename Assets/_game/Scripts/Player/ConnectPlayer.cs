@@ -58,6 +58,8 @@ public class ConnectPlayer : MonoBehaviour
 
             Transform root = player.transform.root;
             root.position = isNecromancer ? _SpawnNEC.position : _SpawnMG.position;
+            PlayerCommander commander = root.GetComponentInChildren<PlayerCommander>();
+            if (commander != null) commander.ResetFollowTrail();
 
             if (gameManager != null)
             {

@@ -13,6 +13,7 @@ public class Attack2_MG : MonoBehaviour
     [SerializeField, ReadOnly] float _bufferTimer;
 
     Brain_Proj2_MG _projectile;
+    ParticleSystem _pendingTrail;
     bool _wasLookEnabled;
     bool _isAttacking;
 
@@ -98,6 +99,14 @@ public class Attack2_MG : MonoBehaviour
             return;
         }
 
+        if (_pendingTrail != null)
+        {
+            ParticleTrailFeedback trail = _projectile.transform.root.GetComponentInChildren<ParticleTrailFeedback>();
+            if (trail != null) trail.AttachParticles(_pendingTrail);
+            else ParticleTrailFeedback.StopParticles(_pendingTrail);
+            _pendingTrail = null;
+        }
+
         if (_lookSystem != null) _lookSystem.enabled = false;
 
         _projectile.Rotated += Rotate;
@@ -111,11 +120,15 @@ public class Attack2_MG : MonoBehaviour
 
     void EndAttack()
     {
+        ParticleTrailFeedback trail = _projectile != null
+            ? _projectile.transform.root.GetComponentInChildren<ParticleTrailFeedback>() : null;
         DetachProjectile();
 
         if (_bufferTimer > 0f && isActiveAndEnabled && _shootSystemFollow != null
             && _shootSystemFollow.isActiveAndEnabled && _shootSystemFollow.CanShoot)
         {
+            // Keep the live emitter and its distance accumulator across combo projectiles.
+            _pendingTrail = trail != null ? trail.DetachParticles() : null;
             _bufferTimer = 0f;
             _shootSystemFollow.Shoot();
             return;
@@ -137,6 +150,8 @@ public class Attack2_MG : MonoBehaviour
 
     void FinishAttack()
     {
+        ParticleTrailFeedback.StopParticles(_pendingTrail);
+        _pendingTrail = null;
         if (!IsAttacking) return;
 
         _isAttacking = false;
